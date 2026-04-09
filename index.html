@@ -121,8 +121,10 @@ h2.titulo strong{font-weight:700}
 .clientes-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:48px;flex-wrap:wrap}
 .clientes-label{font-family:'Raleway',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris-texto);white-space:nowrap;flex-shrink:0}
 .clientes-logos{display:flex;align-items:center;gap:48px;flex-wrap:wrap;flex:1}
-.cliente-logo{display:flex;align-items:center;justify-content:center;opacity:0.65;transition:opacity 0.2s,filter 0.2s;filter:grayscale(100%)}
-.cliente-logo:hover{opacity:1;filter:grayscale(0%)}
+.cliente-logo{display:flex;align-items:center;justify-content:center;opacity:0.9;transition:opacity 0.2s}
+.cliente-logo:hover{opacity:1}
+.cliente-logo img{height:60px;width:auto;object-fit:contain;max-width:180px}
+.cliente-logo.grande img{height:80px;max-width:220px}
 .cliente-logo img{height:44px;width:auto;object-fit:contain;max-width:140px}
 
 /* SERVICIOS */
@@ -396,8 +398,8 @@ footer{background:var(--marino);padding:56px 40px 32px}
     <span class="clientes-label">Confían en nosotros</span>
     <div class="clientes-logos">
       <div class="cliente-logo"><img src="img/logo-meds.png" alt="Clínica MEDS"></div>
-      <div class="cliente-logo"><img src="img/logo-montenbaik.png" alt="Montenbaik Enduro"></div>
-      <div class="cliente-logo"><img src="img/logo-montenbaik-junior.png" alt="Montenbaik Junior Enduro"></div>
+      <div class="cliente-logo grande"><img src="img/logo-montenbaik.png" alt="Montenbaik Enduro"></div>
+      <div class="cliente-logo grande"><img src="img/logo-montenbaik-junior.png" alt="Montenbaik Junior Enduro"></div>
       <div class="cliente-logo"><img src="img/logo-fechida.png" alt="FECHIDA"></div>
     </div>
   </div>
