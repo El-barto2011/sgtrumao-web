@@ -116,6 +116,15 @@ h2.titulo{font-family:'Raleway',sans-serif;font-weight:200;font-size:clamp(32px,
 h2.titulo strong{font-weight:700}
 .subtitulo{font-size:16px;font-weight:300;color:var(--gris-texto);line-height:1.75;max-width:580px}
 
+/* CLIENTES */
+.clientes-band{background:#fff;border-bottom:1px solid var(--gris-borde);padding:40px 40px}
+.clientes-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:48px;flex-wrap:wrap}
+.clientes-label{font-family:'Raleway',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris-texto);white-space:nowrap;flex-shrink:0}
+.clientes-logos{display:flex;align-items:center;gap:48px;flex-wrap:wrap;flex:1}
+.cliente-logo{display:flex;align-items:center;justify-content:center;opacity:0.65;transition:opacity 0.2s,filter 0.2s;filter:grayscale(100%)}
+.cliente-logo:hover{opacity:1;filter:grayscale(0%)}
+.cliente-logo img{height:44px;width:auto;object-fit:contain;max-width:140px}
+
 /* SERVICIOS */
 #servicios{padding:96px 40px;background:var(--gris-bg)}
 .serv-header{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px;flex-wrap:wrap}
@@ -379,6 +388,19 @@ footer{background:var(--marino);padding:56px 40px 32px}
   <div class="trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,14"/></svg><span>Respuesta en <strong>menos de 24 horas</strong></span></div>
   <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Personal <strong>100% certificado</strong></span></div>
   <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Cobertura en <strong>todo Chile</strong></span></div>
+</div>
+
+<!-- BANNER CLIENTES -->
+<div class="clientes-band">
+  <div class="clientes-inner">
+    <span class="clientes-label">Confían en nosotros</span>
+    <div class="clientes-logos">
+      <div class="cliente-logo"><img src="img/logo-meds.png" alt="Clínica MEDS"></div>
+      <div class="cliente-logo"><img src="img/logo-montenbaik.png" alt="Montenbaik Enduro"></div>
+      <div class="cliente-logo"><img src="img/logo-montenbaik-junior.png" alt="Montenbaik Junior Enduro"></div>
+      <div class="cliente-logo"><img src="img/logo-fechida.png" alt="FECHIDA"></div>
+    </div>
+  </div>
 </div>
 
 <section id="servicios">
