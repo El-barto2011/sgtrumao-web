@@ -104,13 +104,13 @@ nav.scrolled{box-shadow:0 2px 24px var(--sombra-med);border-bottom-color:var(--t
 .poly-bg polygon{opacity:0;transform-origin:center;transition:opacity 1s ease}
 
 .hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:center}
-.hero-eyebrow{display:inline-block;font-family:'Raleway',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-cla);border:1px solid rgba(100,180,180,0.4);padding:5px 14px;border-radius:2px;margin-bottom:24px;opacity:0;transform:translateY(20px)}
-.hero h1{font-family:'Raleway',sans-serif;font-size:clamp(38px,5.5vw,72px);font-weight:200;letter-spacing:0.04em;color:#fff;line-height:1.1;margin-bottom:28px;opacity:0;transform:translateY(30px)}
+.hero-eyebrow{display:inline-block;font-family:'Raleway',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-cla);border:1px solid rgba(100,180,180,0.4);padding:5px 14px;border-radius:2px;margin-bottom:24px;}
+.hero h1{font-family:'Raleway',sans-serif;font-size:clamp(38px,5.5vw,72px);font-weight:200;letter-spacing:0.04em;color:#fff;line-height:1.1;margin-bottom:28px;}
 .hero h1 strong{font-weight:700;color:var(--teal-pale);display:block}
 .hero h1 em{font-style:normal;color:var(--teal-cla)}
-.hero-desc{font-size:17px;font-weight:300;color:rgba(255,255,255,0.72);line-height:1.75;max-width:500px;margin-bottom:40px;opacity:0;transform:translateY(20px)}
+.hero-desc{font-size:17px;font-weight:300;color:rgba(255,255,255,0.72);line-height:1.75;max-width:500px;margin-bottom:40px;}
 .hero-desc strong{color:rgba(255,255,255,0.95);font-weight:400}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px;opacity:0;transform:translateY(20px)}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px;}
 
 /* Botones magnéticos */
 .btn-solid{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;padding:14px 28px;border-radius:3px;font-family:'Raleway',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border:2px solid var(--teal);cursor:none;transition:background 0.2s,border-color 0.2s,transform 0.15s,box-shadow 0.3s}
@@ -118,14 +118,14 @@ nav.scrolled{box-shadow:0 2px 24px var(--sombra-med);border-bottom-color:var(--t
 .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:14px 28px;border-radius:3px;font-family:'Raleway',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border:2px solid rgba(255,255,255,0.35);cursor:none;transition:border-color 0.2s,background 0.2s,transform 0.15s}
 .btn-outline:hover{border-color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.06);transform:translateY(-3px)}
 
-.hero-stats{display:flex;gap:32px;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap;}
 .hstat{display:flex;flex-direction:column;gap:2px}
 .hstat-num{font-family:'Raleway',sans-serif;font-size:28px;font-weight:700;color:var(--teal-pale);line-height:1}
 .hstat-label{font-size:11px;font-weight:300;color:rgba(255,255,255,0.55);letter-spacing:0.04em}
 .hstat-sep{width:1px;background:rgba(255,255,255,0.15);align-self:stretch;margin:4px 0}
 
 /* Hero card con efecto shimmer */
-.hero-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.35);opacity:0;transform:translateX(40px) translateY(20px);position:relative}
+.hero-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.35);position:relative}
 .hero-card::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.15) 50%,transparent 60%);transform:translateX(-100%);pointer-events:none;animation:card-shimmer 4s ease-in-out infinite 2s}
 @keyframes card-shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 
@@ -805,14 +805,14 @@ window.addEventListener('load',()=>{
     opacity:1, stagger:0.06, duration:0.7, ease:'power2.out', delay:0.2
   });
 
-  // Hero text cascade
+  // Hero text cascade — from() anima DESDE estos valores, así el fallback sin GSAP muestra todo visible
   const tl = gsap.timeline({defaults:{ease:'power3.out'}});
-  tl.to('.hero-eyebrow',{opacity:1,y:0,duration:.7,delay:.4})
-    .to('.hero h1',      {opacity:1,y:0,duration:.8},'-=.3')
-    .to('.hero-desc',    {opacity:1,y:0,duration:.7},'-=.4')
-    .to('.hero-btns',    {opacity:1,y:0,duration:.6},'-=.4')
-    .to('.hero-stats',   {opacity:1,y:0,duration:.6},'-=.3')
-    .to('#heroCard',     {opacity:1,x:0,y:0,duration:.8,ease:'back.out(1.2)'},'-=.5');
+  tl.from('.hero-eyebrow',{opacity:0,y:20,duration:.7,delay:.3})
+    .from('.hero h1',      {opacity:0,y:30,duration:.8},'-=.3')
+    .from('.hero-desc',    {opacity:0,y:20,duration:.7},'-=.4')
+    .from('.hero-btns',    {opacity:0,y:20,duration:.6},'-=.4')
+    .from('.hero-stats',   {opacity:0,y:20,duration:.6},'-=.3')
+    .from('#heroCard',     {opacity:0,x:40,y:20,duration:.8,ease:'back.out(1.2)'},'-=.5');
 
   // Particles canvas fade in
   setTimeout(()=>{ document.getElementById('hero-particles').style.opacity='1'; },600);
