@@ -47,33 +47,35 @@ body{font-family:'Lato',sans-serif;background:var(--blanco);color:var(--gris-dar
 
 /* ── CURSOR PERSONALIZADO ── */
 #cursor-ring{
-  position:fixed;width:36px;height:36px;border-radius:50%;
-  border:2px solid rgba(20,140,140,0.6);
+  position:fixed;width:40px;height:40px;border-radius:50%;
+  border:2px solid var(--teal);
   pointer-events:none;z-index:9999;
   transform:translate(-50%,-50%);
-  transition:width .25s,height .25s,border-color .25s,background .25s;
-  mix-blend-mode:normal;
+  transition:width .3s ease,height .3s ease,border-color .3s,background .3s,opacity .3s;
+  opacity:0;
 }
 #cursor-dot{
-  position:fixed;width:6px;height:6px;border-radius:50%;
+  position:fixed;width:8px;height:8px;border-radius:50%;
   background:var(--teal);
   pointer-events:none;z-index:9999;
   transform:translate(-50%,-50%);
-  transition:width .1s,height .1s;
+  box-shadow:0 0 10px rgba(20,140,140,0.8);
+  opacity:0;
 }
+body.cursor-ready #cursor-ring{ opacity:1; }
+body.cursor-ready #cursor-dot{ opacity:1; }
 body:has(a:hover) #cursor-ring,
 body:has(button:hover) #cursor-ring{
-  width:56px;height:56px;
-  border-color:var(--teal);
-  background:rgba(20,140,140,0.08);
+  width:60px;height:60px;
+  border-color:var(--teal-med);
+  background:rgba(20,140,140,0.1);
 }
 
 /* ── CANVAS THREE.JS ── */
 #hero-particles{
   position:absolute;inset:0;
   pointer-events:none;z-index:1;
-  opacity:0;
-  transition:opacity 1s ease;
+  opacity:1;
 }
 
 /* ── NAV ── */
@@ -787,9 +789,17 @@ document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',(
 /* ── CURSOR PERSONALIZADO ── */
 const ring = document.getElementById('cursor-ring');
 const dot  = document.getElementById('cursor-dot');
-let cx=0,cy=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px';});
-(function movRing(){rx+=(cx-rx)*.15;ry+=(cy-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(movRing)})();
+let cx=window.innerWidth/2,cy=window.innerHeight/2,rx=cx,ry=cy;
+document.addEventListener('mousemove',e=>{
+  cx=e.clientX; cy=e.clientY;
+  dot.style.left=cx+'px'; dot.style.top=cy+'px';
+  document.body.classList.add('cursor-ready');
+});
+(function movRing(){
+  rx+=(cx-rx)*.12; ry+=(cy-ry)*.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(movRing);
+})();
 
 /* ── SCROLL REVEAL ── */
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}}),{threshold:0.12});
@@ -813,9 +823,6 @@ window.addEventListener('load',()=>{
     .from('.hero-btns',    {opacity:0,y:20,duration:.6},'-=.4')
     .from('.hero-stats',   {opacity:0,y:20,duration:.6},'-=.3')
     .from('#heroCard',     {opacity:0,x:40,y:20,duration:.8,ease:'back.out(1.2)'},'-=.5');
-
-  // Particles canvas fade in
-  setTimeout(()=>{ document.getElementById('hero-particles').style.opacity='1'; },600);
 
   // ScrollTrigger parallax on polygon
   gsap.to('.poly-bg svg',{
