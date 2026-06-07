@@ -447,6 +447,20 @@ footer{background:var(--marino);padding:56px 40px 32px}
 @keyframes wa-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .wa-btn svg{width:26px;height:26px;fill:#fff}
 
+/* ── INSTAGRAM FEED ── */
+#instagram{padding:80px 40px;background:var(--gris-bg)}
+.ig-feed-header{text-align:center;margin-bottom:40px}
+.ig-feed-header .eyebrow{justify-content:center}
+.ig-feed-header .eyebrow::after{display:none}
+.ig-feed-header h2.titulo{margin:0 auto 12px}
+.ig-feed-header .subtitulo{margin:0 auto;text-align:center}
+.ig-handle{display:inline-flex;align-items:center;gap:8px;margin-top:16px;text-decoration:none;font-family:'Raleway',sans-serif;font-size:14px;font-weight:600;color:var(--teal);border:1.5px solid rgba(20,140,140,0.35);padding:8px 18px;border-radius:50px;transition:background .2s,border-color .2s,color .2s;cursor:none}
+.ig-handle:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.ig-handle svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.ig-widget-wrap{max-width:1100px;margin:0 auto;border-radius:8px;overflow:hidden}
+behold-widget{--behold-font-family:'Lato',sans-serif}
+@media(max-width:900px){#instagram{padding:56px 24px}.ig-handle{cursor:pointer}}
+
 /* ── TESTIMONIOS ── */
 #testimonios{padding:96px 40px;background:#fff}
 .test-header{text-align:center;margin-bottom:56px}
@@ -543,7 +557,7 @@ footer{background:var(--marino);padding:56px 40px 32px}
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#equipamiento">Equipamiento</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#instagram">Instagram</a></li>
       <li><a href="#contacto">Contacto</a></li>
       <li><a href="#contacto" class="nav-btn">Cotizar</a></li>
     </ul>
@@ -809,6 +823,30 @@ footer{background:var(--marino);padding:56px 40px 32px}
           <div class="team-card" style="border-color:rgba(100,180,180,0.4);background:rgba(20,140,140,0.1)"><div class="team-ico" style="background:rgba(20,140,140,0.3)"><svg viewBox="0 0 24 24" style="stroke:var(--teal-ice)"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="team-nombre" style="color:var(--teal-pale)">Santiago, Chile</div><div class="team-esp">Cobertura nacional</div></div></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INSTAGRAM FEED ─── -->
+<section id="instagram">
+  <div class="section-wrap">
+    <div class="ig-feed-header reveal">
+      <div class="eyebrow">Síguenos en Instagram</div>
+      <h2 class="titulo">SGTRUMAO en <strong>terreno</strong></h2>
+      <p class="subtitulo">Eventos reales, equipo en acción. Conoce nuestro trabajo día a día.</p>
+      <a href="https://www.instagram.com/sg_trumao" target="_blank" class="ig-handle">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        @sg_trumao
+      </a>
+    </div>
+    <div class="ig-widget-wrap reveal">
+      <behold-widget feed-id="4YKagdje5fXmRc05yygJ"></behold-widget>
+      <script>
+        (() => {
+          const d=document,s=d.createElement("script");s.type="module";
+          s.src="https://w.behold.so/widget.js";d.head.append(s);
+        })();
+      </script>
     </div>
   </div>
 </section>
