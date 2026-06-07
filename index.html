@@ -489,6 +489,18 @@ behold-widget{--behold-font-family:'Lato',sans-serif}
   .test-grid-bottom{grid-template-columns:1fr;max-width:100%}
 }
 
+/* FAQ */
+#faq{padding:96px 40px;background:var(--gris-bg)}
+.faq-wrap{max-width:780px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--gris-borde)}
+.faq-item:first-of-type{border-top:1px solid var(--gris-borde)}
+details.faq-item summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;font-family:'Raleway',sans-serif;font-weight:600;font-size:17px;color:var(--marino);gap:16px}
+details.faq-item summary::-webkit-details-marker{display:none}
+.faq-icon{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;transition:transform .3s}
+.faq-icon::before{content:'+';color:#fff;font-size:16px;font-weight:300;line-height:1}
+details[open].faq-item .faq-icon{transform:rotate(45deg)}
+.faq-answer{padding:0 0 24px;font-size:15px;color:var(--gris-texto);line-height:1.7;max-width:680px}
+
 /* REVEAL ANIMATIONS */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
 .reveal.on{opacity:1;transform:none}
@@ -934,6 +946,59 @@ behold-widget{--behold-font-family:'Lato',sans-serif}
     </div>
   </div>
 </section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+  <div class="section-wrap">
+    <div class="test-header reveal" style="text-align:center;margin-bottom:56px">
+      <div class="eyebrow">Preguntas frecuentes</div>
+      <h2 class="titulo">Todo lo que necesitas <strong>saber</strong></h2>
+      <p class="subtitulo">Resolvemos las dudas más comunes antes de cotizar.</p>
+    </div>
+    <div class="faq-wrap">
+
+      <details class="faq-item reveal">
+        <summary>¿Con cuánta anticipación debo contratar el servicio?<span class="faq-icon"></span></summary>
+        <p class="faq-answer">Recomendamos contratar con al menos <strong>una semana de anticipación</strong> para eventos medianos. Para eventos masivos (+500 personas) o con requerimientos especiales, lo ideal es coordinar con <strong>2 a 4 semanas de antelación</strong> para asegurar disponibilidad de personal y equipamiento.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>¿Cubren eventos fuera de Santiago?<span class="faq-icon"></span></summary>
+        <p class="faq-answer">Sí, tenemos <strong>cobertura en todo Chile</strong>. Hemos operado en eventos en regiones del norte, centro y sur del país. Los costos de traslado se incluyen en la cotización según la ubicación y duración del evento.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>¿Qué incluye la carpa médica?<span class="faq-icon"></span></summary>
+        <p class="faq-answer">La carpa médica llega completamente equipada: <strong>DEA operativo, botiquín avanzado, oxígeno portátil, tabla espinal, collarín cervical, vendajes, férulas e inmovilizadores</strong>. Todo instalado y listo antes del inicio del evento, sin que debas preocuparte de nada.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>¿Tienen ambulancia disponible?<span class="faq-icon"></span></summary>
+        <p class="faq-answer">Sí. Contamos con <strong>ambulancia básica y medicalizada</strong> con paramédico a bordo, disponible según el tipo y tamaño del evento. Puedes consultarla como servicio adicional al momento de cotizar.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>¿Cuánto personal envían según el tamaño del evento?<span class="faq-icon"></span></summary>
+        <p class="faq-answer">El equipo se dimensiona según el número de asistentes, tipo de actividad y riesgos específicos. Para eventos pequeños puede ser suficiente un paramédico y kinesiólogo; para eventos masivos enviamos un equipo completo con <strong>médico, enfermero, kinesiólogo, masoterapeuta y paramédico</strong>. Te lo detallamos en la cotización.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿Con cuánta anticipación debo contratar el servicio?","acceptedAnswer":{"@type":"Answer","text":"Recomendamos contratar con al menos una semana de anticipación para eventos medianos. Para eventos masivos (+500 personas) lo ideal es coordinar con 2 a 4 semanas de antelación."}},
+    {"@type":"Question","name":"¿Cubren eventos fuera de Santiago?","acceptedAnswer":{"@type":"Answer","text":"Sí, tenemos cobertura en todo Chile. Los costos de traslado se incluyen en la cotización según la ubicación y duración del evento."}},
+    {"@type":"Question","name":"¿Qué incluye la carpa médica?","acceptedAnswer":{"@type":"Answer","text":"La carpa médica incluye DEA operativo, botiquín avanzado, oxígeno portátil, tabla espinal, collarín cervical, vendajes, férulas e inmovilizadores."}},
+    {"@type":"Question","name":"¿Tienen ambulancia disponible?","acceptedAnswer":{"@type":"Answer","text":"Sí, contamos con ambulancia básica y medicalizada con paramédico a bordo, disponible según el tipo y tamaño del evento."}},
+    {"@type":"Question","name":"¿Cuánto personal envían según el tamaño del evento?","acceptedAnswer":{"@type":"Answer","text":"El equipo se dimensiona según el número de asistentes y tipo de actividad. Para eventos masivos enviamos médico, enfermero, kinesiólogo, masoterapeuta y paramédico."}}
+  ]
+}
+</script>
 
 <!-- ─── CONTACTO ─── -->
 <section id="contacto">
