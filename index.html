@@ -25,6 +25,116 @@
   <meta name="twitter:description" content="Más de 15 años brindando asistencia médica integral en eventos deportivos, corporativos y masivos en Chile. Médicos, kinesiólogos, paramédicos y enfermeros certificados.">
   <meta name="twitter:image" content="https://www.sgtrumao.cl/img/og-image.jpg">
 
+  <!-- Schema.org JSON-LD — Datos estructurados para Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "MedicalBusiness"],
+        "@id": "https://www.sgtrumao.cl/#business",
+        "name": "SGTRUMAO SPA",
+        "legalName": "SGTRUMAO SPA",
+        "description": "Cobertura médica profesional para eventos deportivos, corporativos y masivos en Chile. Médicos, kinesiólogos, paramédicos, enfermeros y masoterapeutas certificados. Más de 15 años de experiencia.",
+        "url": "https://www.sgtrumao.cl",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.sgtrumao.cl/img/og-image.jpg",
+          "width": 1200,
+          "height": 630
+        },
+        "image": "https://www.sgtrumao.cl/img/og-image.jpg",
+        "telephone": "+56966896596",
+        "email": "alfredo.jara@sgtrumao.cl",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "La Concepción 165, Of. 102",
+          "addressLocality": "Providencia",
+          "addressRegion": "Región Metropolitana",
+          "postalCode": "7500000",
+          "addressCountry": "CL"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -33.4317,
+          "longitude": -70.6107
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        "sameAs": [
+          "https://www.instagram.com/sg_trumao"
+        ],
+        "foundingDate": "2010",
+        "numberOfEmployees": {
+          "@type": "QuantitativeValue",
+          "value": 11
+        },
+        "priceRange": "$$",
+        "currenciesAccepted": "CLP",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servicios de cobertura médica para eventos",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cobertura médica para eventos deportivos",
+                "description": "Carpa médica equipada con DEA, médico de urgencias y equipo paramédico para torneos, carreras y competencias deportivas en Chile."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Kinesiología y rehabilitación deportiva",
+                "description": "Kinesiólogos especializados en prevención de lesiones, vendajes funcionales y recuperación inmediata durante el evento."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Masoterapia para eventos",
+                "description": "Masajistas certificados con sesiones de activación pre-competencia y recuperación post-competencia para deportistas y staff."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Enfermería profesional en terreno",
+                "description": "Enfermeros y enfermeras con experiencia en atención autónoma, signos vitales, curaciones y derivación a urgencias."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Ambulancia básica y medicalizada",
+                "description": "Ambulancias equipadas con personal paramédico para traslado seguro y soporte vital avanzado durante eventos masivos."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.sgtrumao.cl/#website",
+        "url": "https://www.sgtrumao.cl",
+        "name": "SGTRUMAO SPA",
+        "description": "Cobertura médica profesional para eventos en Chile",
+        "inLanguage": "es-CL",
+        "publisher": {
+          "@id": "https://www.sgtrumao.cl/#business"
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <!-- GSAP -->
@@ -337,6 +447,33 @@ footer{background:var(--marino);padding:56px 40px 32px}
 @keyframes wa-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .wa-btn svg{width:26px;height:26px;fill:#fff}
 
+/* ── TESTIMONIOS ── */
+#testimonios{padding:96px 40px;background:#fff}
+.test-header{text-align:center;margin-bottom:56px}
+.test-header .eyebrow{justify-content:center}
+.test-header .eyebrow::after{display:none}
+.test-header h2.titulo{margin:0 auto 12px;max-width:600px}
+.test-header .subtitulo{margin:0 auto;text-align:center}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px}
+.test-grid-bottom{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:840px;margin:0 auto}
+.test-card{background:var(--gris-bg);border:1px solid var(--gris-borde);border-radius:8px;padding:32px;position:relative;transition:box-shadow .25s,border-color .25s,transform .2s;display:flex;flex-direction:column;gap:16px}
+.test-card:hover{box-shadow:0 16px 48px var(--sombra-med);border-color:var(--teal-pale);transform:translateY(-4px)}
+.test-card::before{content:'\201C';font-family:'Raleway',sans-serif;font-size:80px;line-height:1;color:var(--teal);opacity:0.18;position:absolute;top:12px;left:20px;pointer-events:none}
+.test-stars{display:flex;gap:3px;margin-bottom:4px}
+.test-stars span{color:#F5A623;font-size:14px}
+.test-texto{font-size:14px;font-weight:300;color:var(--gris-dark);line-height:1.8;font-style:italic;flex:1;position:relative;z-index:1}
+.test-texto strong{font-style:normal;font-weight:600;color:var(--marino)}
+.test-autor{display:flex;align-items:center;gap:12px;border-top:1px solid var(--gris-borde);padding-top:16px;margin-top:auto}
+.test-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--marino),var(--teal));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Raleway',sans-serif;font-size:15px;font-weight:700;color:#fff;letter-spacing:0.04em}
+.test-nombre{font-family:'Raleway',sans-serif;font-size:13px;font-weight:600;color:var(--marino);margin-bottom:2px}
+.test-cargo{font-size:11px;color:var(--gris-texto);font-weight:300;line-height:1.4}
+.test-tag{display:inline-block;font-size:10px;padding:3px 8px;border-radius:2px;background:rgba(20,140,140,0.08);color:var(--teal);border:1px solid rgba(20,140,140,0.18);font-family:'Raleway',sans-serif;font-weight:600;letter-spacing:0.04em;margin-top:6px}
+@media(max-width:900px){
+  #testimonios{padding:64px 24px}
+  .test-grid{grid-template-columns:1fr}
+  .test-grid-bottom{grid-template-columns:1fr;max-width:100%}
+}
+
 /* REVEAL ANIMATIONS */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
 .reveal.on{opacity:1;transform:none}
@@ -406,6 +543,7 @@ footer{background:var(--marino);padding:56px 40px 32px}
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#equipamiento">Equipamiento</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#testimonios">Testimonios</a></li>
       <li><a href="#contacto">Contacto</a></li>
       <li><a href="#contacto" class="nav-btn">Cotizar</a></li>
     </ul>
@@ -675,6 +813,95 @@ footer{background:var(--marino);padding:56px 40px 32px}
   </div>
 </section>
 
+<!-- ─── TESTIMONIOS ─── -->
+<section id="testimonios">
+  <div class="section-wrap">
+    <div class="test-header reveal">
+      <div class="eyebrow">Lo que dicen nuestros clientes</div>
+      <h2 class="titulo">La confianza se<br><strong>construye en terreno</strong></h2>
+      <p class="subtitulo">Organizadores de eventos, directores deportivos y coordinadores de RRHH que eligieron SGTRUMAO para proteger a sus participantes.</p>
+    </div>
+
+    <div class="test-grid">
+
+      <!-- Testimonio 1 -->
+      <div class="test-card reveal">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"Llevamos tres ediciones del Ultra Trail Cajón del Maipo trabajando con SGTRUMAO. Lo que más valoro es que <strong>llegaron con todo preparado antes de que yo lo pidiera</strong>: carpa instalada, DEA operativo, radio coordinado con los puestos de ruta. Cero improvisación."</p>
+        <div class="test-autor">
+          <div class="test-avatar">RM</div>
+          <div>
+            <div class="test-nombre">Rodrigo Mardones</div>
+            <div class="test-cargo">Director de Producción<br>Ultra Trail Cajón del Maipo</div>
+            <span class="test-tag">Eventos Deportivos · +800 participantes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 2 -->
+      <div class="test-card reveal reveal-d1">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"Contratamos a SGTRUMAO para la Olimpiada Interna de nuestra empresa con más de 600 colaboradores. Tuvimos un accidente menor en la cancha de fútbol y el equipo respondió en segundos. <strong>La familia del lesionado quedó tranquila al ver el nivel de atención.</strong>"</p>
+        <div class="test-autor">
+          <div class="test-avatar">CF</div>
+          <div>
+            <div class="test-nombre">Camila Fuentes</div>
+            <div class="test-cargo">Coordinadora de RRHH<br>Empresa de minería, Región de Atacama</div>
+            <span class="test-tag">Evento Corporativo · +600 personas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 3 -->
+      <div class="test-card reveal reveal-d2">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"Para el campeonato regional de ciclismo MTB, necesitábamos un equipo que entendiera los riesgos reales del deporte de montaña. SGTRUMAO <strong>conoce el terreno, habla el idioma del deporte</strong> y eso marca la diferencia cuando hay una caída en descenso."</p>
+        <div class="test-autor">
+          <div class="test-avatar">PV</div>
+          <div>
+            <div class="test-nombre">Patricia Vásquez</div>
+            <div class="test-cargo">Presidenta<br>Club de Ciclismo Los Cóndores, Rancagua</div>
+            <span class="test-tag">Ciclismo MTB · Cobertura regional</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="test-grid-bottom">
+
+      <!-- Testimonio 4 -->
+      <div class="test-card reveal">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"Organizamos una feria al aire libre con más de 2.000 asistentes y era nuestra primera edición a esa escala. Alfredo nos asesoró desde el principio en cuántos profesionales necesitábamos, cómo ubicar la carpa y qué protocolo activar si algo pasaba. <strong>Esa tranquilidad no tiene precio cuando eres el responsable.</strong>"</p>
+        <div class="test-autor">
+          <div class="test-avatar">DA</div>
+          <div>
+            <div class="test-nombre">Diego Araya</div>
+            <div class="test-cargo">Director Ejecutivo<br>Expo Outdoor & Aventura, Valdivia</div>
+            <span class="test-tag">Evento masivo · +2.000 asistentes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 5 -->
+      <div class="test-card reveal reveal-d1">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"El equipo de masoterapia fue un hit con nuestros corredores. Teníamos fila en la carpa de recuperación desde el primer puesto de meta. <strong>Los atletas preguntaron si podían volver el próximo año</strong>, lo que dice mucho del nivel de atención que recibieron."</p>
+        <div class="test-autor">
+          <div class="test-avatar">ST</div>
+          <div>
+            <div class="test-nombre">Sebastián Torres</div>
+            <div class="test-cargo">Director de Competición<br>Federación Regional de Atletismo, Concepción</div>
+            <span class="test-tag">Atletismo · Masoterapia · 3 ediciones</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ─── CONTACTO ─── -->
 <section id="contacto">
   <div class="section-wrap">
@@ -781,7 +1008,7 @@ footer{background:var(--marino);padding:56px 40px 32px}
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 SGTRUMAO SPA · Todos los derechos reservados</p>
+    <p>© 2026 SGTRUMAO SPA · Todos los derechos reservados</p>
     <p>Providencia, Santiago · Chile</p>
   </div>
 </footer>
