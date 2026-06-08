@@ -136,7 +136,6 @@
   </script>
 
   <!-- Three.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script type="module" src="https://w.behold.so/widget.js"></script>
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -1177,7 +1176,13 @@ window.addEventListener('load',()=>{
 });
 
 /* ── THREE.JS PARTÍCULAS HERO ── */
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
+  var s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  s.onload=initParticles;
+  document.body.appendChild(s);
+});
+function initParticles(){(function(){
   const canvas = document.getElementById('hero-particles');
   const hero   = document.querySelector('.hero');
   if(!canvas||typeof THREE==='undefined') return;
@@ -1234,7 +1239,7 @@ window.addEventListener('load',()=>{
     scene.rotation.x = Math.sin(t*.008)*.03 + my*.02;
     renderer.render(scene,camera);
   })();
-})();
+})();}
 
 /* ── 3D TILT EN CARDS ── */
 document.querySelectorAll('[data-tilt]').forEach(card=>{
