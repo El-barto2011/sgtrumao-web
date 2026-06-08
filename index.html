@@ -1044,11 +1044,11 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
           </div>
           <div id="formContent" class="form-body">
             <div class="form-grid">
-              <div class="fg"><label>Nombre completo</label><input type="text" id="nombre" placeholder="Tu nombre"></div>
-              <div class="fg"><label>Email</label><input type="email" id="email" placeholder="correo@empresa.cl"></div>
-              <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" id="tel" placeholder="+56 9 ..."></div>
-              <div class="fg"><label>Tipo de evento</label>
-                <select id="tipo">
+              <div class="fg"><label for="nombre">Nombre completo</label><input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required></div>
+              <div class="fg"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="correo@empresa.cl" required></div>
+              <div class="fg"><label for="tel">Teléfono / WhatsApp</label><input type="tel" id="tel" name="tel" placeholder="+56 9 ..."></div>
+              <div class="fg"><label for="tipo">Tipo de evento</label>
+                <select id="tipo" name="tipo">
                   <option value="">Seleccionar...</option>
                   <option>Evento deportivo (torneo, carrera)</option>
                   <option>Evento corporativo</option>
@@ -1057,8 +1057,8 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
                   <option>Otro</option>
                 </select>
               </div>
-              <div class="fg full"><label>Fecha y lugar del evento</label><input type="text" id="lugar" placeholder="Ej: 20 agosto, Estadio Municipal Temuco"></div>
-              <div class="fg full"><label>¿Qué necesitas?</label><textarea id="msg" rows="4" placeholder="Servicios requeridos, número de asistentes, detalles relevantes..."></textarea></div>
+              <div class="fg full"><label for="lugar">Fecha y lugar del evento</label><input type="text" id="lugar" name="lugar" placeholder="Ej: 20 agosto, Estadio Municipal Temuco"></div>
+              <div class="fg full"><label for="msg">¿Qué necesitas?</label><textarea id="msg" name="msg" rows="4" placeholder="Servicios requeridos, número de asistentes, detalles relevantes..."></textarea></div>
             </div>
             <button class="btn-enviar" onclick="submitForm()">
               Enviar solicitud
