@@ -463,7 +463,7 @@ behold-widget{--behold-font-family:'Lato',sans-serif}
 .test-header h2.titulo{margin:0 auto 12px;max-width:600px}
 .test-header .subtitulo{margin:0 auto;text-align:center}
 .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px}
-.test-grid-bottom{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:840px;margin:0 auto}
+.test-grid-bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto}
 .test-card{background:var(--gris-bg);border:1px solid var(--gris-borde);border-radius:8px;padding:32px;position:relative;transition:box-shadow .25s,border-color .25s,transform .2s;display:flex;flex-direction:column;gap:16px}
 .test-card:hover{box-shadow:0 16px 48px var(--sombra-med);border-color:var(--teal-pale);transform:translateY(-4px)}
 .test-card::before{content:'\201C';font-family:'Raleway',sans-serif;font-size:80px;line-height:1;color:var(--teal);opacity:0.18;position:absolute;top:12px;left:20px;pointer-events:none}
@@ -870,8 +870,22 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
 
     <div class="test-grid">
 
-      <!-- Testimonio 1 -->
+      <!-- Testimonio Krespita -->
       <div class="test-card reveal">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"Llevo años en el boxeo, primero arriba del ring y ahora organizando veladas, y algo que nunca dejo al azar es la parte médica. SGTRUMAO se ha ganado mi confianza pelea tras pelea: <strong>llegan, revisan a cada boxeador antes de subir y se quedan atentos toda la noche</strong>. Da una tranquilidad enorme saber que mi gente está en buenas manos, como si fueran parte del equipo."</p>
+        <div class="test-autor">
+          <div class="test-avatar">KR</div>
+          <div>
+            <div class="test-nombre">Krespita Rodríguez</div>
+            <div class="test-cargo">Boxeadora profesional y organizadora de veladas</div>
+            <span class="test-tag">Boxeo profesional · Veladas de boxeo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 1 -->
+      <div class="test-card reveal reveal-d1">
         <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
         <p class="test-texto">"Contraté a SGTRUMAO por primera vez para un torneo y desde el primer contacto se notó la experiencia. <strong>Llegaron antes que cualquier otro proveedor</strong>, con todo instalado y funcionando. No tuve que preocuparme de nada relacionado con la seguridad durante todo el día."</p>
         <div class="test-autor">
@@ -885,7 +899,7 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
       </div>
 
       <!-- Testimonio 2 -->
-      <div class="test-card reveal reveal-d1">
+      <div class="test-card reveal reveal-d2">
         <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
         <p class="test-texto">"Contratamos a SGTRUMAO para la Olimpiada Interna de nuestra empresa con más de 600 colaboradores. Tuvimos un accidente menor en la cancha de fútbol y el equipo respondió en segundos. <strong>La familia del lesionado quedó tranquila al ver el nivel de atención.</strong>"</p>
         <div class="test-autor">
@@ -894,20 +908,6 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
             <div class="test-nombre">Camila Fuentes</div>
             <div class="test-cargo">Coordinadora de RRHH</div>
             <span class="test-tag">Evento Corporativo · +600 personas</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimonio 3 -->
-      <div class="test-card reveal reveal-d2">
-        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="test-texto">"Para el campeonato de ciclismo MTB, necesitábamos un equipo que entendiera los riesgos reales del deporte de montaña. SGTRUMAO <strong>conoce el terreno, habla el idioma del deporte</strong> y eso marca la diferencia cuando hay una caída en descenso."</p>
-        <div class="test-autor">
-          <div class="test-avatar">PV</div>
-          <div>
-            <div class="test-nombre">Patricia Vásquez</div>
-            <div class="test-cargo">Presidenta Club de Ciclismo</div>
-            <span class="test-tag">Ciclismo MTB</span>
           </div>
         </div>
       </div>
@@ -940,6 +940,20 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
             <div class="test-nombre">Sebastián Torres</div>
             <div class="test-cargo">Director de Competición</div>
             <span class="test-tag">Atletismo · Masoterapia · 3 ediciones</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 3 -->
+      <div class="test-card reveal reveal-d2">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-texto">"Para el campeonato de ciclismo MTB, necesitábamos un equipo que entendiera los riesgos reales del deporte de montaña. SGTRUMAO <strong>conoce el terreno, habla el idioma del deporte</strong> y eso marca la diferencia cuando hay una caída en descenso."</p>
+        <div class="test-autor">
+          <div class="test-avatar">PV</div>
+          <div>
+            <div class="test-nombre">Patricia Vásquez</div>
+            <div class="test-cargo">Presidenta Club de Ciclismo</div>
+            <span class="test-tag">Ciclismo MTB</span>
           </div>
         </div>
       </div>
