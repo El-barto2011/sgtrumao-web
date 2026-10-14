@@ -34,10 +34,24 @@ tr.eval td{background:var(--ambar)}
 .chk{width:20px;height:20px;accent-color:var(--teal)}
 .hidden{display:none}
 small{color:var(--suave)}
+#acciones{display:flex;gap:8px}
+#acciones.hidden{display:none}
+.acc{display:flex;flex-direction:column;gap:6px}
+.acc button{padding:6px 10px;font-size:13px}
+button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
+.modal{position:fixed;inset:0;background:rgba(0,20,40,.45);display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto;z-index:10}
+.modal.hidden{display:none}
+.caja{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:560px}
+.caja h3{font-family:'Raleway';color:var(--marino);margin-bottom:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.g2{grid-template-columns:1fr}}
+.campo{margin-bottom:10px}
+.campo label{display:block;font-weight:700;font-size:13px;margin-bottom:4px}
+.botones{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 </style>
 </head>
 <body>
-<div class="top"><h1>Masaje en silla · Global Safety Day 28-oct</h1><div id="acciones" class="hidden" style="display:flex;gap:8px"><button class="sec" id="recargar">Actualizar</button><button id="csv">Descargar CSV</button></div></div>
+<div class="top"><h1>Masaje en silla · Global Safety Day 28-oct</h1><div id="acciones" class="hidden"><button class="sec" id="recargar">Actualizar</button><button id="csv">Descargar CSV</button></div></div>
 
 <div class="login" id="login">
   <h2>Acceso equipo</h2>
@@ -54,9 +68,40 @@ small{color:var(--suave)}
     <label style="display:flex;align-items:center;gap:6px;white-space:nowrap"><input type="checkbox" id="fEval" class="chk" style="width:18px">Solo a evaluar</label>
   </div>
   <div class="tbl"><table>
-    <thead><tr><th>Asistió</th><th>Sede · Hora</th><th>Persona</th><th>Anamnesis</th><th>Molestia</th><th>Presión</th><th>Obs.</th></tr></thead>
+    <thead><tr><th>Asistió</th><th>Sede · Hora</th><th>Persona</th><th>Anamnesis</th><th>Molestia</th><th>Presión</th><th>Obs.</th><th></th></tr></thead>
     <tbody id="filas"></tbody>
   </table></div>
+</div>
+
+<div class="modal hidden" id="mEditar" role="dialog" aria-modal="true" aria-labelledby="tEditar">
+  <div class="caja">
+    <h3 id="tEditar">Editar inscripción</h3>
+    <div class="g2">
+      <div class="campo"><label for="eSede">Sede</label><select id="eSede"><option>Parque Titanium</option><option>Faena El Soldado</option></select></div>
+      <div class="campo"><label for="eHora">Horario</label><select id="eHora"></select></div>
+    </div>
+    <div class="campo"><label for="eNombre">Nombre completo</label><input id="eNombre"></div>
+    <div class="g2">
+      <div class="campo"><label for="eRut">RUT</label><input id="eRut"></div>
+      <div class="campo"><label for="eEdad">Edad</label><input id="eEdad" type="number" min="16" max="99"></div>
+      <div class="campo"><label for="eTel">Teléfono</label><input id="eTel" type="tel"></div>
+      <div class="campo"><label for="eEmail">Correo</label><input id="eEmail" type="email"></div>
+    </div>
+    <div class="campo"><label for="eArea">Área o cargo</label><input id="eArea"></div>
+    <div class="campo"><label for="eMed">Medicamentos</label><input id="eMed"></div>
+    <div class="campo"><label for="eObs">Observaciones</label><input id="eObs"></div>
+    <p class="err" id="eErr"></p>
+    <div class="botones"><button class="sec" data-cerrar>Cancelar</button><button id="eGuardar">Guardar cambios</button></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="mBorrar" role="dialog" aria-modal="true" aria-labelledby="tBorrar">
+  <div class="caja">
+    <h3 id="tBorrar">Eliminar inscripción</h3>
+    <p id="bTexto"></p>
+    <p class="err" id="bErr"></p>
+    <div class="botones"><button class="sec" data-cerrar>Cancelar</button><button class="del" id="bConfirmar" style="background:#B3261E;color:#fff;border:0">Sí, eliminar</button></div>
+  </div>
 </div>
 
 <script>
@@ -94,7 +139,8 @@ function pintar(){
     <td><b>${esc(d.nombre)}</b><br><small>${fmtRut(d.rut)} · ${d.edad??''} años<br>${esc(d.telefono)}${d.area?'<br>'+esc(d.area):''}</small></td>
     <td>${d.requiere_evaluacion?'<span class="tag">EVALUAR</span><br>':''}${esc(d.condiciones.join(', '))}${d.medicamentos?'<br><small>Med: '+esc(d.medicamentos)+'</small>':''}</td>
     <td>${esc(d.zonas_molestia.join(', '))}<br><small>Dolor ${d.dolor??0}/10</small></td>
-    <td>${esc(d.presion)}</td><td>${esc(d.observaciones)}</td></tr>`).join('')||'<tr><td colspan="7"><small>Sin inscripciones.</small></td></tr>';
+    <td>${esc(d.presion)}</td><td>${esc(d.observaciones)}</td>
+    <td><div class="acc"><button class="sec" data-edit="${d.id}">Editar</button><button class="del" data-del="${d.id}">Eliminar</button></div></td></tr>`).join('')||'<tr><td colspan="8"><small>Sin inscripciones.</small></td></tr>';
 }
 ['fSede','fTxt','fEval'].forEach(id=>$(id).addEventListener('input',pintar));
 $('recargar').onclick=()=>cargar();
@@ -104,6 +150,50 @@ $('filas').addEventListener('change',async e=>{
     datos.find(d=>d.id===e.target.dataset.id).asistio=e.target.checked;pintar();}
   catch(err){alert('No se pudo guardar');e.target.checked=!e.target.checked;}
 });
+let actual=null, dispo=[];
+const abrir=id=>$(id).classList.remove('hidden'), cerrar=()=>document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));
+document.querySelectorAll('[data-cerrar]').forEach(b=>b.onclick=cerrar);
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)cerrar()}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrar()});
+function llenarHoras(){
+  const sede=$('eSede').value, propia=actual&&actual.sede===sede?actual.hora.slice(0,5):null;
+  $('eHora').innerHTML=dispo.filter(b=>b.sede===sede).map(b=>{
+    const h=b.hora.slice(0,5), libres=b.cupo-b.ocupados+(h===propia?1:0);
+    return `<option value="${h}" ${libres<=0?'disabled':''} ${h===propia?'selected':''}>${h} · ${libres<=0?'lleno':libres+(libres===1?' libre':' libres')}</option>`;
+  }).join('');
+}
+$('eSede').onchange=llenarHoras;
+$('filas').addEventListener('click',async e=>{
+  const ed=e.target.closest('[data-edit]'), del=e.target.closest('[data-del]');
+  if(ed){
+    actual=datos.find(d=>d.id===ed.dataset.edit); $('eErr').textContent='';
+    $('eSede').value=actual.sede; $('eNombre').value=actual.nombre; $('eRut').value=fmtRut(actual.rut);
+    $('eEdad').value=actual.edad??''; $('eTel').value=actual.telefono??''; $('eEmail').value=actual.email??'';
+    $('eArea').value=actual.area??''; $('eMed').value=actual.medicamentos??''; $('eObs').value=actual.observaciones??'';
+    $('eHora').innerHTML='<option>Cargando…</option>'; abrir('mEditar');
+    try{dispo=await rpc('masajes_anglo_disponibilidad',{}); llenarHoras();}catch(err){$('eErr').textContent='No se pudieron cargar los horarios.';}
+  }
+  if(del){
+    actual=datos.find(d=>d.id===del.dataset.del); $('bErr').textContent='';
+    $('bTexto').innerHTML=`¿Eliminar a <b>${esc(actual.nombre)}</b> (${esc(actual.sede)}, ${actual.hora.slice(0,5)} hrs)? Se libera su cupo y no se puede deshacer.`;
+    abrir('mBorrar');
+  }
+});
+$('eGuardar').onclick=async()=>{
+  const b=$('eGuardar'); b.disabled=true; $('eErr').textContent='';
+  try{
+    const r=await rpc('masajes_anglo_editar',{p_clave:clave,p_id:actual.id,p:{sede:$('eSede').value,hora:$('eHora').value,nombre:$('eNombre').value,rut:$('eRut').value,edad:$('eEdad').value,telefono:$('eTel').value,email:$('eEmail').value,area:$('eArea').value,medicamentos:$('eMed').value,observaciones:$('eObs').value}});
+    if(!r.ok){$('eErr').textContent=r.error;return;}
+    cerrar(); await cargar();
+  }catch(err){$('eErr').textContent='No se pudo guardar. Revisa tu conexión.';}
+  finally{b.disabled=false;}
+};
+$('bConfirmar').onclick=async()=>{
+  const b=$('bConfirmar'); b.disabled=true;
+  try{await rpc('masajes_anglo_eliminar',{p_clave:clave,p_id:actual.id}); cerrar(); await cargar();}
+  catch(err){$('bErr').textContent='No se pudo eliminar. Revisa tu conexión.';}
+  finally{b.disabled=false;}
+};
 $('csv').onclick=()=>{
   const cols=['sede','hora','nombre','rut','edad','telefono','email','area','condiciones','medicamentos','zonas_molestia','dolor','presion','observaciones','requiere_evaluacion','asistio','created_at'];
   const q=v=>'"'+String(Array.isArray(v)?v.join('; '):v??'').replace(/"/g,'""')+'"';
