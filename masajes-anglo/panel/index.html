@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel masajes · Global Safety Day</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Raleway:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--marino:#002850;--teal:#148C8C;--borde:#D3E3E3;--fondo:#F4F8F8;--suave:#5A6B78;--ambar:#FFF3D6;--ambar-t:#7A5200}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',sans-serif;background:var(--fondo);color:#1E2D3A;font-size:14px}
+.top{background:var(--marino);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.top h1{font-family:'Raleway';font-size:17px}
+.wrap{max-width:1200px;margin:0 auto;padding:16px}
+.login{max-width:360px;margin:60px auto;background:#fff;border:1px solid var(--borde);border-radius:12px;padding:24px}
+.login h2{font-family:'Raleway';color:var(--marino);margin-bottom:12px}
+input,select{padding:10px;border:1px solid var(--borde);border-radius:8px;font:inherit;font-size:15px;width:100%}
+button{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}
+button.sec{background:#fff;color:var(--marino);border:1px solid var(--borde)}
+.err{color:#B3261E;margin-top:8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:12px}
+.stat b{display:block;font-size:24px;color:var(--marino)}
+.stat span{color:var(--suave);font-size:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.bar select,.bar input{width:auto;flex:1;min-width:160px}
+.tbl{overflow-x:auto;background:#fff;border:1px solid var(--borde);border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--borde);text-align:left;vertical-align:top}
+th{background:#EEF4F4;font-size:12px;color:var(--suave);text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0}
+tr.eval td{background:var(--ambar)}
+.tag{display:inline-block;background:#FCE3B0;color:var(--ambar-t);border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700}
+.chk{width:20px;height:20px;accent-color:var(--teal)}
+.hidden{display:none}
+small{color:var(--suave)}
+</style>
+</head>
+<body>
+<div class="top"><h1>Masaje en silla · Global Safety Day 28-oct</h1><div id="acciones" class="hidden" style="display:flex;gap:8px"><button class="sec" id="recargar">Actualizar</button><button id="csv">Descargar CSV</button></div></div>
+
+<div class="login" id="login">
+  <h2>Acceso equipo</h2>
+  <input type="password" id="clave" placeholder="Clave del panel" autocomplete="current-password">
+  <button style="width:100%;margin-top:10px" id="entrar">Entrar</button>
+  <p class="err" id="err"></p>
+</div>
+
+<div class="wrap hidden" id="app">
+  <div class="stats" id="stats"></div>
+  <div class="bar">
+    <select id="fSede"><option value="">Todas las sedes</option><option>Parque Titanium</option><option>Faena El Soldado</option></select>
+    <input id="fTxt" placeholder="Buscar nombre o RUT">
+    <label style="display:flex;align-items:center;gap:6px;white-space:nowrap"><input type="checkbox" id="fEval" class="chk" style="width:18px">Solo a evaluar</label>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Asistió</th><th>Sede · Hora</th><th>Persona</th><th>Anamnesis</th><th>Molestia</th><th>Presión</th><th>Obs.</th></tr></thead>
+    <tbody id="filas"></tbody>
+  </table></div>
+</div>
+
+<script>
+const SB_URL='https://dnlvzwrujosuckdzmffx.supabase.co', SB_KEY='sb_publishable_fv9R8pVxgaHyxABGebYXOQ_aw_3f6RZ';
+const $=id=>document.getElementById(id);
+let clave='', datos=[];
+const rpc=async(fn,body)=>{const r=await fetch(`${SB_URL}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json();if(!r.ok)throw new Error(j.message||'Error');return j;};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtRut=r=>r?r.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+r.slice(-1):'';
+
+async function cargar(){
+  datos=await rpc('masajes_anglo_panel',{p_clave:clave});
+  pintar();
+}
+$('entrar').onclick=async()=>{
+  clave=$('clave').value; $('err').textContent='';
+  try{await cargar(); try{sessionStorage.setItem('mk',clave)}catch(e){}
+    $('login').classList.add('hidden');$('app').classList.remove('hidden');$('acciones').classList.remove('hidden');}
+  catch(e){$('err').textContent='Clave incorrecta.';}
+};
+$('clave').onkeydown=e=>{if(e.key==='Enter')$('entrar').click()};
+try{const k=sessionStorage.getItem('mk');if(k){$('clave').value=k;$('entrar').click();}}catch(e){}
+
+function pintar(){
+  const s=$('fSede').value, t=$('fTxt').value.toLowerCase(), ev=$('fEval').checked;
+  const lista=datos.filter(d=>(!s||d.sede===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)||d.rut.toLowerCase().includes(t.replace(/[^0-9k]/g,''))));
+  const n=f=>datos.filter(f).length;
+  $('stats').innerHTML=[
+    ['Inscritos',datos.length],['Parque Titanium',n(d=>d.sede==='Parque Titanium')],['Faena El Soldado',n(d=>d.sede==='Faena El Soldado')],
+    ['A evaluar',n(d=>d.requiere_evaluacion)],['Atendidos',n(d=>d.asistio)]
+  ].map(([l,v])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+  $('filas').innerHTML=lista.map(d=>`<tr class="${d.requiere_evaluacion?'eval':''}">
+    <td><input type="checkbox" class="chk" data-id="${d.id}" ${d.asistio?'checked':''}></td>
+    <td><b>${d.hora.slice(0,5)}</b><br><small>${esc(d.sede)}</small></td>
+    <td><b>${esc(d.nombre)}</b><br><small>${fmtRut(d.rut)} · ${d.edad??''} años<br>${esc(d.telefono)}${d.area?'<br>'+esc(d.area):''}</small></td>
+    <td>${d.requiere_evaluacion?'<span class="tag">EVALUAR</span><br>':''}${esc(d.condiciones.join(', '))}${d.medicamentos?'<br><small>Med: '+esc(d.medicamentos)+'</small>':''}</td>
+    <td>${esc(d.zonas_molestia.join(', '))}<br><small>Dolor ${d.dolor??0}/10</small></td>
+    <td>${esc(d.presion)}</td><td>${esc(d.observaciones)}</td></tr>`).join('')||'<tr><td colspan="7"><small>Sin inscripciones.</small></td></tr>';
+}
+['fSede','fTxt','fEval'].forEach(id=>$(id).addEventListener('input',pintar));
+$('recargar').onclick=()=>cargar();
+$('filas').addEventListener('change',async e=>{
+  if(!e.target.dataset.id)return;
+  try{await rpc('masajes_anglo_marcar_asistencia',{p_clave:clave,p_id:e.target.dataset.id,p_asistio:e.target.checked});
+    datos.find(d=>d.id===e.target.dataset.id).asistio=e.target.checked;pintar();}
+  catch(err){alert('No se pudo guardar');e.target.checked=!e.target.checked;}
+});
+$('csv').onclick=()=>{
+  const cols=['sede','hora','nombre','rut','edad','telefono','email','area','condiciones','medicamentos','zonas_molestia','dolor','presion','observaciones','requiere_evaluacion','asistio','created_at'];
+  const q=v=>'"'+String(Array.isArray(v)?v.join('; '):v??'').replace(/"/g,'""')+'"';
+  const csv='﻿'+cols.join(';')+'\n'+datos.map(d=>cols.map(c=>q(d[c])).join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='masajes_anglo_28oct.csv';a.click();
+};
+</script>
+</body>
+</html>
