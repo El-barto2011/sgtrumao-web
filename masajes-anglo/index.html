@@ -13,13 +13,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Lato',sans-serif;background:var(--fondo);color:var(--texto);line-height:1.5;-webkit-font-smoothing:antialiased}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px}
-header{background:#fff;border-bottom:1px solid var(--borde)}
+header{background:#fff}
 .logos{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px}
 .logo-meds{height:46px;width:auto}
-.sg{display:flex;flex-direction:column;align-items:flex-end;line-height:1;text-decoration:none}
-.sg-n{font-family:'Raleway',sans-serif;font-weight:300;font-size:24px;letter-spacing:.18em;color:var(--marino)}
-.sg-n sup{font-size:8px;letter-spacing:.1em;margin-left:2px}
-.sg-t{font-weight:300;font-style:italic;font-size:8.5px;letter-spacing:.12em;color:var(--teal);margin-top:4px}
+.sg{display:block;line-height:0}
+.sg img{height:46px;width:auto;display:block}
+.franja{display:block;width:100%;height:clamp(80px,18vw,220px);object-fit:cover;object-position:center bottom;background:#fff;margin-bottom:-1px}
 .hero{background:linear-gradient(135deg,var(--marino) 0%,#0B4A6B 60%,var(--teal) 100%);color:#fff;padding:36px 0 40px}
 .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--hielo);margin-bottom:10px}
 h1{font-family:'Raleway',sans-serif;font-weight:700;font-size:clamp(26px,6vw,36px);line-height:1.15;margin-bottom:12px}
@@ -37,7 +36,7 @@ input[type=text],input[type=email],input[type=tel],input[type=number],textarea,s
 input:focus,textarea:focus,select:focus{outline:2px solid var(--teal-m);border-color:var(--teal)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .f{margin-bottom:14px}
-@media(max-width:560px){.grid{grid-template-columns:1fr}.logo-meds{height:32px}.sg-n{font-size:17px;letter-spacing:.12em}.sg-t{font-size:7px;letter-spacing:.06em}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.logo-meds{height:32px}.sg img{height:32px}}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .seg label,.checks label{font-weight:400;border:1px solid var(--borde);border-radius:10px;padding:12px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;margin:0;background:#fff}
 .seg input,.checks input{accent-color:var(--teal);margin-top:3px;flex:none;width:18px;height:18px}
@@ -73,7 +72,7 @@ button.enviar:disabled{opacity:.6;cursor:wait}
 .resumen{display:inline-block;text-align:left;background:var(--fondo);border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15px}
 footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
 .hidden{display:none}
-@media(max-width:400px){.sg-n{font-size:15px;letter-spacing:.1em}.sg-t{font-size:6.5px}.logo-meds{height:30px}}
+@media(max-width:400px){.sg img{height:27px}.logo-meds{height:28px}}
 </style>
 </head>
 <body>
@@ -81,12 +80,12 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
   <div class="wrap logos">
     <img class="logo-meds" src="/img/logo-meds.png" alt="Clínica MEDS" width="820" height="245">
     <a class="sg" href="https://www.sgtrumao.cl" aria-label="SGTRUMAO SPA">
-      <span class="sg-n">SGTRUMAO<sup>SPA</sup></span>
-      <span class="sg-t">Llevamos tu evento a otro nivel</span>
+      <img src="/img/logo-sgtrumao.png" alt="SGTRUMAO SPA — We take your event to another level" width="737" height="140">
     </a>
   </div>
 </header>
 
+<img class="franja" src="/img/masajes-triangulos.webp" alt="" aria-hidden="true" width="1600" height="504">
 <section class="hero">
   <div class="wrap">
     <div class="kicker">Global Safety Day · Anglo American</div>
