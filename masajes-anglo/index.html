@@ -14,10 +14,8 @@
 body{font-family:'Lato',sans-serif;background:var(--fondo);color:var(--texto);line-height:1.5;-webkit-font-smoothing:antialiased}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px}
 header{background:#fff}
-.logos{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px}
-.logo-meds{height:46px;width:auto}
-.sg{display:block;line-height:0}
-.sg img{height:46px;width:auto;display:block}
+.logos{display:flex;align-items:center;justify-content:center;gap:16px;padding:16px}
+.logo-meds{height:56px;width:auto}
 .franja{display:block;width:100%;height:clamp(80px,18vw,220px);object-fit:cover;object-position:center bottom;background:#fff;margin-bottom:-1px}
 .hero{background:linear-gradient(135deg,var(--marino) 0%,#0B4A6B 60%,var(--teal) 100%);color:#fff;padding:36px 0 40px}
 .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--hielo);margin-bottom:10px}
@@ -36,7 +34,7 @@ input[type=text],input[type=email],input[type=tel],input[type=number],textarea,s
 input:focus,textarea:focus,select:focus{outline:2px solid var(--teal-m);border-color:var(--teal)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .f{margin-bottom:14px}
-@media(max-width:560px){.grid{grid-template-columns:1fr}.logo-meds{height:32px}.sg img{height:32px}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.logo-meds{height:38px}}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .seg label,.checks label{font-weight:400;border:1px solid var(--borde);border-radius:10px;padding:12px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;margin:0;background:#fff}
 .seg input,.checks input{accent-color:var(--teal);margin-top:3px;flex:none;width:18px;height:18px}
@@ -72,16 +70,13 @@ button.enviar:disabled{opacity:.6;cursor:wait}
 .resumen{display:inline-block;text-align:left;background:var(--fondo);border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15px}
 footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
 .hidden{display:none}
-@media(max-width:400px){.sg img{height:27px}.logo-meds{height:28px}}
+
 </style>
 </head>
 <body>
 <header>
   <div class="wrap logos">
     <img class="logo-meds" src="/img/logo-meds.png" alt="Clínica MEDS" width="820" height="245">
-    <a class="sg" href="https://www.sgtrumao.cl" aria-label="SGTRUMAO SPA">
-      <img src="/img/logo-sgtrumao.png" alt="SGTRUMAO SPA — We take your event to another level" width="737" height="140">
-    </a>
   </div>
 </header>
 
