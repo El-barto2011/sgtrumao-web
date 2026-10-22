@@ -216,7 +216,8 @@ function pintar() {
     return `<button type="button" class="slot${hora===h?' sel':''}" data-h="${h}" ${libres<=0?'disabled':''}><b>${h}</b><small>${libres<=0?'Lleno':libres+(libres===1?' cupo':' cupos')}</small></button>`;
   }).join('');
   const am = lista.filter(d => d.hora < '13:00'), pm = lista.filter(d => d.hora >= '13:00');
-  $('slotsBox').innerHTML = `<div class="slot-group">Mañana</div><div class="slots">${html(am)}</div><div class="slot-group">Tarde</div><div class="slots">${html(pm)}</div>`;
+  const grupo = (t, g) => g.length ? `<div class="slot-group">${t}</div><div class="slots">${html(g)}</div>` : '';
+  $('slotsBox').innerHTML = grupo('Mañana', am) + grupo('Tarde', pm);
 }
 $('sedes').addEventListener('change', () => { hora = null; pintar(); });
 $('slotsBox').addEventListener('click', e => {
