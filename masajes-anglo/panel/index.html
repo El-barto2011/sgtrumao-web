@@ -63,7 +63,7 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
 <div class="wrap hidden" id="app">
   <div class="stats" id="stats"></div>
   <div class="bar">
-    <select id="fSede"><option value="">Todas las sedes</option><option>Parque Titanium</option><option>Faena El Soldado</option></select>
+    <select id="fSede"><option value="">Todas las sedes</option><option>Edificio Titanium</option><option>Faena El Soldado</option></select>
     <input id="fTxt" placeholder="Buscar nombre o RUT">
     <label style="display:flex;align-items:center;gap:6px;white-space:nowrap"><input type="checkbox" id="fEval" class="chk" style="width:18px">Solo a evaluar</label>
   </div>
@@ -77,7 +77,7 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
   <div class="caja">
     <h3 id="tEditar">Editar inscripción</h3>
     <div class="g2">
-      <div class="campo"><label for="eSede">Sede</label><select id="eSede"><option>Parque Titanium</option><option>Faena El Soldado</option></select></div>
+      <div class="campo"><label for="eSede">Sede</label><select id="eSede"><option>Edificio Titanium</option><option>Faena El Soldado</option></select></div>
       <div class="campo"><label for="eHora">Horario</label><select id="eHora"></select></div>
     </div>
     <div class="campo"><label for="eNombre">Nombre completo</label><input id="eNombre"></div>
@@ -130,7 +130,7 @@ function pintar(){
   const lista=datos.filter(d=>(!s||d.sede===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)||d.rut.toLowerCase().includes(t.replace(/[^0-9k]/g,''))));
   const n=f=>datos.filter(f).length;
   $('stats').innerHTML=[
-    ['Inscritos',datos.length],['Parque Titanium',n(d=>d.sede==='Parque Titanium')],['Faena El Soldado',n(d=>d.sede==='Faena El Soldado')],
+    ['Inscritos',datos.length],['Edificio Titanium',n(d=>d.sede==='Edificio Titanium')],['Faena El Soldado',n(d=>d.sede==='Faena El Soldado')],
     ['A evaluar',n(d=>d.requiere_evaluacion)],['Atendidos',n(d=>d.asistio)]
   ].map(([l,v])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
   $('filas').innerHTML=lista.map(d=>`<tr class="${d.requiere_evaluacion?'eval':''}">
