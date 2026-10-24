@@ -477,6 +477,21 @@ behold-widget{--behold-font-family:'Lato',sans-serif}
 @media(max-width:900px){#instagram{padding:56px 24px}.ig-handle{cursor:pointer}}
 
 /* ── TESTIMONIOS ── */
+#casos{padding:96px 40px;background:var(--gris-bg)}
+.casos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:44px}
+.caso{background:#fff;border:1px solid var(--gris-borde);border-radius:8px;padding:28px;border-top:3px solid var(--teal);display:flex;flex-direction:column;gap:6px}
+.caso-tipo{font-family:'Raleway',sans-serif;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0F6B6B}
+.caso h3{font-family:'Raleway',sans-serif;font-size:19px;font-weight:600;color:var(--marino);line-height:1.3}
+.caso-num{font-family:'Raleway',sans-serif;font-size:44px;font-weight:700;color:var(--teal);line-height:1;margin-top:14px}
+.caso-num-lbl{font-size:13px;color:var(--gris-texto);font-weight:300}
+.caso-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.caso-meta span{font-size:11px;padding:4px 10px;border-radius:2px;background:rgba(20,140,140,0.07);color:var(--teal);border:1px solid rgba(20,140,140,0.18);font-family:'Raleway',sans-serif;font-weight:500}
+.casos-lista{margin-top:44px;padding-top:28px;border-top:1px solid var(--gris-borde)}
+.casos-lista-lbl{font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:14px}
+.casos-chips{display:flex;flex-wrap:wrap;gap:8px}
+.casos-chips span{font-size:13px;color:var(--marino);background:#fff;border:1px solid var(--gris-borde);border-radius:30px;padding:8px 16px}
+.casos-nota{font-size:12px;color:var(--gris-texto);margin-top:18px;font-weight:300}
+@media(max-width:768px){#casos{padding:64px 20px}}
 #testimonios{padding:96px 40px;background:#fff}
 .test-header{text-align:center;margin-bottom:56px}
 .test-header .eyebrow{justify-content:center}
@@ -997,6 +1012,54 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ─── CASOS 2026 ─── -->
+<section id="casos">
+  <div class="section-wrap">
+    <div class="reveal">
+      <div class="eyebrow">Casos reales · 2026</div>
+      <h2 class="titulo">Lo que hacemos,<br><strong>en números</strong></h2>
+      <p class="subtitulo">Cada atención queda registrada en TRIAGE360, nuestra plataforma clínica. Estas son algunas coberturas de este año.</p>
+    </div>
+    <div class="casos-grid">
+      <div class="caso reveal">
+        <div class="caso-tipo">Hockey · Torneo internacional</div>
+        <h3>Panamericano Junior de Hockey</h3>
+        <div class="caso-num">46</div>
+        <div class="caso-num-lbl">atenciones en 9 días de torneo</div>
+        <div class="caso-meta"><span>Médico</span><span>Kinesiología</span><span>Masoterapia</span></div>
+      </div>
+      <div class="caso reveal reveal-d1">
+        <div class="caso-tipo">Tenis · Torneo de 8 días</div>
+        <h3>Torneo de Tenis Omar Pabst</h3>
+        <div class="caso-num">38</div>
+        <div class="caso-num-lbl">sesiones de masoterapia a jugadores</div>
+        <div class="caso-meta"><span>Masoterapia</span><span>Pre y post partido</span></div>
+      </div>
+      <div class="caso reveal reveal-d2">
+        <div class="caso-tipo">Rugby · Partido profesional</div>
+        <h3>Selknam vs. Peñarol</h3>
+        <div class="caso-num">10</div>
+        <div class="caso-num-lbl">atenciones médicas en una jornada</div>
+        <div class="caso-meta"><span>Médico</span><span>Paramédico</span><span>Carpa médica</span></div>
+      </div>
+      <div class="caso reveal reveal-d2">
+        <div class="caso-tipo">Enduro MTB · 2 días</div>
+        <h3>Enduro Series</h3>
+        <div class="caso-num">7</div>
+        <div class="caso-num-lbl">atenciones de kinesiología en recorrido</div>
+        <div class="caso-meta"><span>Kinesiología</span><span>Atención en terreno</span></div>
+      </div>
+    </div>
+    <div class="casos-lista reveal">
+      <div class="casos-lista-lbl">También estuvimos en</div>
+      <div class="casos-chips">
+        <span>Maratón de Santiago</span><span>FIBA 3x3</span><span>Torneo Sudamericano de Tenis Damas Seniors</span><span>Selknam vs. Pampas</span><span>Activación Los Cóndores</span><span>Stade Français vs. Old Boys</span><span>Tenis en silla de ruedas</span>
+      </div>
+      <p class="casos-nota">Cifras de atenciones registradas en TRIAGE360 durante cada cobertura.</p>
     </div>
   </div>
 </section>
