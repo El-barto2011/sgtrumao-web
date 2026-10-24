@@ -143,11 +143,11 @@
   }
   </script>
 
-  <!-- Three.js -->
+  <!-- Instagram (Behold) -->
   <script type="module" src="https://w.behold.so/widget.js"></script>
   <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <link rel="canonical" href="https://www.sgtrumao.cl">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -419,6 +419,14 @@ h2.titulo strong{font-weight:700}
 .fg input::placeholder,.fg textarea::placeholder{color:rgba(90,107,109,0.5)}
 .btn-enviar{width:100%;background:var(--marino);color:#fff;border:none;padding:15px 24px;border-radius:4px;font-family:'Raleway',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:none;margin-top:6px;transition:background 0.2s,transform 0.15s,box-shadow .3s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-enviar:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 8px 30px rgba(20,140,140,0.4)}
+.fg-servicios{border:0;padding:0;margin:0;min-width:0}
+.fg-servicios legend{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gris-texto);font-family:'Raleway',sans-serif;margin-bottom:8px;padding:0}
+.chk-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fg .chk{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.3;color:var(--marino);background:var(--gris-bg);border:1px solid var(--gris-borde);border-radius:4px;padding:9px 10px;cursor:pointer;transition:border-color .2s,background .2s;text-transform:none;letter-spacing:0;font-weight:400;font-family:'Lato',sans-serif}
+.fg .chk input{-webkit-appearance:auto;appearance:auto;accent-color:var(--teal);width:16px;height:16px;margin:0;padding:0;flex-shrink:0;background:none;border:0;box-shadow:none}
+.fg .chk:has(input:checked){border-color:var(--teal);background:#fff}
+.fg .chk:has(input:focus-visible){box-shadow:0 0 0 3px rgba(20,140,140,0.15)}
+@media(max-width:360px){.chk-grid{grid-template-columns:1fr}}
 .form-note{text-align:center;font-size:11px;color:var(--gris-texto);margin-top:12px;font-weight:300}
 .form-success{display:none;text-align:center;padding:48px 32px}
 .suc-ico{width:60px;height:60px;border-radius:50%;background:rgba(20,140,140,0.1);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px;color:var(--teal)}
@@ -1099,9 +1107,41 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
                   <option>Otro</option>
                 </select>
               </div>
+              <div class="fg"><label for="asistentes">N° de asistentes</label>
+                <select id="asistentes" name="asistentes">
+                  <option value="">Seleccionar...</option>
+                  <option>Menos de 100</option>
+                  <option>100 a 500</option>
+                  <option>500 a 2.000</option>
+                  <option>Más de 2.000</option>
+                  <option>No lo sé aún</option>
+                </select>
+              </div>
+              <div class="fg"><label for="duracion">Duración</label>
+                <select id="duracion" name="duracion">
+                  <option value="">Seleccionar...</option>
+                  <option>Medio día</option>
+                  <option>1 día</option>
+                  <option>2 o más días</option>
+                  <option>Recurrente (temporada / liga)</option>
+                </select>
+              </div>
+              <fieldset class="fg full fg-servicios"><legend>Servicios que necesitas</legend>
+                <div class="chk-grid">
+                  <label class="chk"><input type="checkbox" name="servicios" value="Médico de urgencias"><span>Médico de urgencias</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="Paramédico / Enfermero"><span>Paramédico / Enfermero</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="Kinesiólogo"><span>Kinesiólogo</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="Masoterapeuta"><span>Masoterapeuta</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="Carpa médica con DEA"><span>Carpa médica con DEA</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="Ambulancia"><span>Ambulancia</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="Nutrición / InBody"><span>Nutrición / InBody</span></label>
+                  <label class="chk"><input type="checkbox" name="servicios" value="No sé, necesito asesoría"><span>No sé, necesito asesoría</span></label>
+                </div>
+              </fieldset>
               <div class="fg full"><label for="lugar">Fecha y lugar del evento</label><input type="text" id="lugar" name="lugar" placeholder="Ej: 20 agosto, Estadio Municipal Temuco"></div>
-              <div class="fg full"><label for="msg">¿Qué necesitas?</label><textarea id="msg" name="msg" rows="4" placeholder="Servicios requeridos, número de asistentes, detalles relevantes..."></textarea></div>
+              <div class="fg full"><label for="msg">¿Qué necesitas?</label><textarea id="msg" name="msg" rows="4" placeholder="Tipo de público, horarios, accesos, cualquier detalle relevante..."></textarea></div>
             </div>
+            <div class="form-error" id="formError" role="alert" hidden></div>
             <button class="btn-enviar" onclick="submitForm()">
               Enviar solicitud
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
@@ -1186,6 +1226,19 @@ const dot = document.getElementById('cursor-dot');
 document.addEventListener('mousemove',e=>{
   dot.style.left=e.clientX+'px'; dot.style.top=e.clientY+'px';
   document.body.classList.add('cursor-ready');
+});
+
+/* ── MEDICIÓN (Google Tag Manager) ── */
+window.dataLayer=window.dataLayer||[];
+function track(evento,params){try{window.dataLayer.push(Object.assign({event:evento},params||{}));}catch(_){}}
+document.addEventListener('click',function(ev){
+  const a=ev.target.closest('a'); if(!a) return;
+  const href=a.getAttribute('href')||'';
+  const zona=a.closest('nav')?'menu':a.closest('footer')?'pie':a.classList.contains('wa-btn')?'boton_flotante':(a.closest('section')||{}).id||'otra';
+  if(href.indexOf('wa.me')>-1) track('whatsapp_click',{ubicacion:zona});
+  else if(href.indexOf('mailto:')===0) track('email_click',{ubicacion:zona});
+  else if(href.indexOf('tel:')===0) track('phone_click',{ubicacion:zona});
+  else if(href==='#contacto') track('cta_cotizar_click',{ubicacion:zona,texto:(a.textContent||'').trim().slice(0,40)});
 });
 
 /* ── SCROLL REVEAL ── */
@@ -1369,18 +1422,35 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',
 }));
 
 /* ── FORM SUBMIT ── */
+function mostrarErrorForm(html){
+  const box=document.getElementById('formError');
+  box.innerHTML=html; box.hidden=false;
+}
 async function submitForm(){
-  const n=document.getElementById('nombre').value.trim();
-  const e=document.getElementById('email').value.trim();
-  if(!n||!e){alert('Por favor ingresa al menos tu nombre y email.');return;}
+  const box=document.getElementById('formError'); box.hidden=true;
+  const nEl=document.getElementById('nombre'), eEl=document.getElementById('email');
+  nEl.classList.remove('invalido'); eEl.classList.remove('invalido');
+  const n=nEl.value.trim(), e=eEl.value.trim();
+  if(!n){nEl.classList.add('invalido');nEl.focus();mostrarErrorForm('Ingresa tu nombre para poder contactarte.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){eEl.classList.add('invalido');eEl.focus();mostrarErrorForm('Revisa tu email: parece incompleto.');return;}
   const btn=document.querySelector('.btn-enviar');
+  const btnHTML=btn.innerHTML;
   btn.textContent='Enviando...'; btn.disabled=true;
+  const servicios=[...document.querySelectorAll('input[name="servicios"]:checked')].map(c=>c.value);
   const data={
     nombre:n,email:e,
     telefono:document.getElementById('tel').value,
     tipo_evento:document.getElementById('tipo').value,
+    asistentes:document.getElementById('asistentes').value,
+    duracion:document.getElementById('duracion').value,
+    servicios:servicios.join(', '),
     fecha_lugar:document.getElementById('lugar').value,
     mensaje:document.getElementById('msg').value
+  };
+  const fallo=()=>{
+    mostrarErrorForm('No pudimos enviar tu solicitud. Inténtalo de nuevo o escríbenos directo por <a href="https://wa.me/56966896596" target="_blank" rel="noopener">WhatsApp +56 9 6689 6596</a>.');
+    btn.innerHTML=btnHTML; btn.disabled=false;
+    track('lead_form_error',{form_name:'cotizacion'});
   };
   try{
     const res=await fetch('https://formspree.io/f/xykbvqlj',{
@@ -1391,14 +1461,9 @@ async function submitForm(){
     if(res.ok){
       document.getElementById('formContent').style.display='none';
       document.getElementById('formSuccess').style.display='block';
-    }else{
-      alert('Hubo un error. Por favor contáctanos por WhatsApp.');
-      btn.textContent='Enviar solicitud'; btn.disabled=false;
-    }
-  }catch(err){
-    alert('Hubo un error. Por favor contáctanos por WhatsApp.');
-    btn.textContent='Enviar solicitud'; btn.disabled=false;
-  }
+      track('generate_lead',{form_name:'cotizacion',tipo_evento:data.tipo_evento||'(sin dato)',asistentes:data.asistentes||'(sin dato)',servicios:data.servicios||'(sin dato)'});
+    }else{ fallo(); }
+  }catch(err){ fallo(); }
 }
 </script>
 
