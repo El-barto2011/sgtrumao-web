@@ -51,7 +51,7 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
 </style>
 </head>
 <body>
-<div class="top"><h1>Masaje en silla · Global Safety Day 28-oct</h1><div id="acciones" class="hidden"><button class="sec" id="recargar">Actualizar</button><button id="csv">Descargar CSV</button></div></div>
+<div class="top"><h1>Masaje en silla · Global Safety Day 28-oct</h1><div id="acciones" class="hidden"><button class="sec" id="recargar">Actualizar</button><button id="pdf">Descargar PDF</button></div></div>
 
 <div class="login" id="login">
   <h2>Acceso equipo</h2>
@@ -194,11 +194,68 @@ $('bConfirmar').onclick=async()=>{
   catch(err){$('bErr').textContent='No se pudo eliminar. Revisa tu conexión.';}
   finally{b.disabled=false;}
 };
-$('csv').onclick=()=>{
-  const cols=['sede','hora','nombre','rut','edad','telefono','email','area','condiciones','medicamentos','zonas_molestia','dolor','presion','observaciones','requiere_evaluacion','asistio','created_at'];
-  const q=v=>'"'+String(Array.isArray(v)?v.join('; '):v??'').replace(/"/g,'""')+'"';
-  const csv='﻿'+cols.join(';')+'\n'+datos.map(d=>cols.map(c=>q(d[c])).join(';')).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='masajes_anglo_28oct.csv';a.click();
+const cargarScript=src=>new Promise((ok,mal)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>mal(new Error('No se pudo cargar '+src));document.head.appendChild(s);});
+let libsPdf=null;
+const asegurarLibsPdf=()=>libsPdf||(libsPdf=cargarScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+  .then(()=>cargarScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js'))
+  .catch(e=>{libsPdf=null;throw e;}));
+function filtrados(){
+  const s=$('fSede').value, t=$('fTxt').value.toLowerCase(), ev=$('fEval').checked;
+  return datos.filter(d=>(!s||d.sede===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)||d.rut.toLowerCase().includes(t.replace(/[^0-9k]/g,''))))
+    .sort((x,y)=>x.sede.localeCompare(y.sede)||x.hora.localeCompare(y.hora)||x.nombre.localeCompare(y.nombre));
+}
+$('pdf').onclick=async()=>{
+  const btn=$('pdf'), txt=btn.textContent; btn.disabled=true; btn.textContent='Generando PDF…';
+  try{
+    await asegurarLibsPdf();
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+    const lista=filtrados(), sede=$('fSede').value;
+    const filtros=[sede||'Todas las sedes', $('fEval').checked?'solo a evaluar':'', $('fTxt').value?('búsqueda: "'+$('fTxt').value+'"'):''].filter(Boolean).join(' · ');
+    const ahora=new Date().toLocaleString('es-CL',{dateStyle:'short',timeStyle:'short'});
+    const W=doc.internal.pageSize.getWidth();
+    doc.setFillColor(42,74,138); doc.rect(0,0,W,22,'F');
+    doc.setTextColor(255); doc.setFont('helvetica','bold'); doc.setFontSize(15);
+    doc.text('Masaje en silla · Global Safety Day 28-oct',12,10);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+    doc.text(filtros+'   |   Generado: '+ahora,12,17);
+    doc.text('SGTRUMAO SpA',W-12,10,{align:'right'});
+    const n=f=>lista.filter(f).length;
+    const resumen=[['Inscritos',lista.length],['Edificio Titanium',n(d=>d.sede==='Edificio Titanium')],['Faena El Soldado',n(d=>d.sede==='Faena El Soldado')],['A evaluar',n(d=>d.requiere_evaluacion)],['Atendidos',n(d=>d.asistio)]];
+    doc.setTextColor(30,45,58); let x=12;
+    resumen.forEach(([l,v])=>{doc.setDrawColor(220,227,239);doc.roundedRect(x,26,52,13,2,2,'S');doc.setFont('helvetica','bold');doc.setFontSize(13);doc.text(String(v),x+4,33);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(94,102,117);doc.text(l,x+4,37);doc.setTextColor(30,45,58);x+=55;});
+    const filas=lista.map(d=>[
+      d.asistio?'Sí':'',
+      d.hora.slice(0,5)+'\n'+(d.sede==='Edificio Titanium'?'Titanium':d.sede==='Faena El Soldado'?'El Soldado':d.sede),
+      d.nombre+'\n'+fmtRut(d.rut)+(d.edad!=null?' · '+d.edad+' años':''),
+      [d.telefono,d.area].filter(Boolean).join('\n'),
+      (d.requiere_evaluacion?'EVALUAR\n':'')+((d.condiciones||[]).join(', ')||'Ninguna')+(d.medicamentos?'\nMed: '+d.medicamentos:''),
+      ((d.zonas_molestia||[]).join(', ')||'-')+'\nDolor '+(d.dolor??0)+'/10',
+      d.presion||'',
+      d.observaciones||''
+    ]);
+    doc.autoTable({
+      startY:43, head:[['Asistió','Hora · Sede','Persona','Contacto · Área','Anamnesis','Molestia','Presión','Obs.']], body:filas,
+      theme:'grid', margin:{left:12,right:12,bottom:14},
+      styles:{font:'helvetica',fontSize:8.5,cellPadding:2,valign:'top',lineColor:[220,227,239],lineWidth:0.2,textColor:[30,45,58],overflow:'linebreak'},
+      headStyles:{fillColor:[237,242,250],textColor:[94,102,117],fontStyle:'bold',fontSize:8},
+      columnStyles:{0:{cellWidth:15,halign:'center'},1:{cellWidth:22},2:{cellWidth:50},3:{cellWidth:36},4:{cellWidth:58},5:{cellWidth:44},6:{cellWidth:18},7:{cellWidth:'auto'}},
+      didParseCell:h=>{ if(h.section!=='body')return; const d=lista[h.row.index];
+        if(d&&d.requiere_evaluacion) h.cell.styles.fillColor=[255,243,214];
+        if(h.column.index===2) h.cell.styles.fontStyle='normal';
+      },
+      didDrawCell:h=>{ if(h.section!=='body'||h.column.index!==0)return;
+        const d=lista[h.row.index]; if(d&&!d.asistio){doc.setDrawColor(150);doc.rect(h.cell.x+h.cell.width/2-2.2,h.cell.y+2,4.4,4.4,'S');}
+      },
+      didDrawPage:()=>{const H=doc.internal.pageSize.getHeight();doc.setFontSize(8);doc.setTextColor(120);
+        doc.text('Documento con datos de salud: uso exclusivo del equipo SGTRUMAO. No reenviar.',12,H-7);
+        doc.text('Página '+doc.internal.getNumberOfPages(),W-12,H-7,{align:'right'});}
+    });
+    if(!lista.length){doc.setFontSize(11);doc.text('Sin inscripciones para los filtros seleccionados.',12,52);}
+    const slug=(sede||'todas').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-');
+    doc.save('masajes_anglo_28oct_'+slug+'.pdf');
+  }catch(e){alert('No se pudo generar el PDF. Revisa tu conexión e inténtalo de nuevo.');}
+  finally{btn.disabled=false;btn.textContent=txt;}
 };
 </script>
 </body>
