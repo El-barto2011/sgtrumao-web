@@ -211,6 +211,8 @@ nav.scrolled{box-shadow:0 2px 24px var(--sombra-med);border-bottom-color:var(--t
 .logo-nombre{font-family:'Raleway',sans-serif;font-weight:300;font-size:26px;letter-spacing:0.18em;color:var(--marino);transition:color .3s}
 .logo-nombre sup{font-size:9px;font-weight:400;letter-spacing:0.1em;vertical-align:super;margin-left:2px}
 .logo-tagline{font-family:'Lato',sans-serif;font-weight:300;font-size:8.5px;letter-spacing:0.12em;color:var(--teal);font-style:italic}
+.logo-img{display:block;height:40px;width:auto}
+@media(max-width:768px){.logo-img{height:34px}}
 .nav-links{display:flex;align-items:center;list-style:none;gap:32px}
 .nav-links a{font-family:'Raleway',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.06em;color:var(--gris-dark);text-decoration:none;transition:color 0.2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease}
@@ -565,9 +567,8 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
 <!-- ─── NAVBAR ─── -->
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="#inicio" class="nav-logo">
-      <span class="logo-nombre">SGTRUMAO<sup>SPA</sup></span>
-      <span class="logo-tagline" lang="en">We take your event to another level</span>
+    <a href="#inicio" class="nav-logo" aria-label="SGTRUMAO SpA – inicio">
+      <img class="logo-img" src="https://www.sgtrumao.cl/img/logo-sgtrumao-marino.svg" alt="SGTRUMAO SpA – We take your event to another level" width="217" height="40">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#servicios">Servicios</a></li>
@@ -1122,9 +1123,8 @@ details[open].faq-item .faq-icon{transform:rotate(45deg)}
 <footer>
   <div class="footer-top">
     <div class="foot-brand">
-      <a href="#inicio" class="foot-logo nav-logo">
-        <span class="logo-nombre">SGTRUMAO<sup>SPA</sup></span>
-        <span class="logo-tagline" lang="en">We take your event to another level</span>
+      <a href="#inicio" class="foot-logo nav-logo" aria-label="SGTRUMAO SpA – inicio">
+        <img class="logo-img" src="https://www.sgtrumao.cl/img/logo-sgtrumao-blanco.svg" alt="SGTRUMAO SpA – We take your event to another level" width="217" height="40" loading="lazy">
       </a>
       <p>Cobertura médica integral para eventos deportivos, corporativos y masivos. Más de 15 años protegiendo vidas en Chile.</p>
       <a href="https://www.instagram.com/sg_trumao" target="_blank" class="foot-social">
