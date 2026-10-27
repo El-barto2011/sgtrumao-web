@@ -194,10 +194,22 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
 <script>
 const SB_URL = 'https://dnlvzwrujosuckdzmffx.supabase.co';
 const SB_KEY = 'sb_publishable_fv9R8pVxgaHyxABGebYXOQ_aw_3f6RZ';
-const rpc = async (fn, body) => {
-  const r = await fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {method:'POST', headers:{apikey:SB_KEY, 'Content-Type':'application/json'}, body:JSON.stringify(body||{})});
-  if (!r.ok) throw new Error('No pudimos conectar. Revisa tu conexión e inténtalo de nuevo.');
-  return r.json();
+const espera = ms => new Promise(r => setTimeout(r, ms));
+// Llamada con tiempo límite y reintentos automáticos (red móvil inestable, caídas momentáneas)
+const rpc = async (fn, body, intentos = 4) => {
+  let ultimo;
+  for (let i = 0; i < intentos; i++) {
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 12000);
+    try {
+      const r = await fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {method:'POST', headers:{apikey:SB_KEY, 'Content-Type':'application/json'}, body:JSON.stringify(body||{}), signal:ctl.signal, cache:'no-store'});
+      if (r.ok) return await r.json();
+      ultimo = new Error('El sistema de reservas no respondió.');
+      if (r.status < 500 && r.status !== 408 && r.status !== 429) break;
+    } catch (e) { ultimo = e; }
+    finally { clearTimeout(t); }
+    if (i < intentos - 1) await espera(800 * 2 ** i);
+  }
+  throw new Error(navigator.onLine === false ? 'Sin conexión a internet. Revisa tu señal e inténtalo de nuevo.' : 'No pudimos conectar con el sistema de reservas. Inténtalo de nuevo en unos segundos.');
 };
 
 let dispo = [], hora = null;
@@ -206,7 +218,7 @@ const sedeSel = () => (document.querySelector('input[name=sede]:checked')||{}).v
 
 async function cargar() {
   try { dispo = await rpc('masajes_anglo_disponibilidad'); pintar(); }
-  catch(e) { $('slotsBox').innerHTML = `<p class="err">${e.message}</p>`; }
+  catch(e) { $('slotsBox').innerHTML = `<p class="err">${e.message}</p><button type="button" class="slot" id="reintentar" style="width:100%;margin-top:8px"><b>Reintentar</b></button>`; }
 }
 function pintar() {
   const s = sedeSel(); if (!s) return;
@@ -221,6 +233,7 @@ function pintar() {
 }
 $('sedes').addEventListener('change', () => { hora = null; pintar(); });
 $('slotsBox').addEventListener('click', e => {
+  if (e.target.closest('#reintentar')) { $('slotsBox').innerHTML = '<p class="muted">Cargando horarios…</p>'; cargar(); return; }
   const b = e.target.closest('.slot'); if (!b || b.disabled) return;
   hora = b.dataset.h; pintar();
 });
@@ -248,7 +261,7 @@ $('form').addEventListener('submit', async e => {
   if (!hora) return falta('Elige un horario.');
   if (v('nombre').length < 3) return falta('Ingresa tu nombre completo.', $('nombre'));
   if (!rutValido(v('rut'))) return falta('Revisa tu RUT.', $('rut'));
-  if (!v('edad')) return falta('Ingresa tu edad.', $('edad'));
+  if (!/^\d{1,3}$/.test(v('edad')) || +v('edad') < 16 || +v('edad') > 99) return falta('Ingresa tu edad (entre 16 y 99).', $('edad'));
   if (v('telefono').replace(/\D/g,'').length < 8) return falta('Ingresa un teléfono válido.', $('telefono'));
   if (!conds().length) return falta('Marca tus condiciones de salud (o "Ninguna").');
   if (!$('consentimiento').checked) return falta('Debes aceptar el consentimiento.');
@@ -264,7 +277,8 @@ $('form').addEventListener('submit', async e => {
   try {
     const r = await rpc('masajes_anglo_inscribir', {p: payload});
     if (!r.ok) { falta(r.error); if (/horario/.test(r.error)) { hora = null; cargar(); } return; }
-    $('resumen').innerHTML = `<b>${payload.nombre}</b><br>${r.sede}<br>Miércoles 28 de octubre · <b>${r.hora} hrs</b>`;
+    const esc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    $('resumen').innerHTML = (r.ya_inscrito ? '<span class="muted">Este RUT ya tenía una hora reservada:</span><br>' : '') + `<b>${esc(payload.nombre)}</b><br>${esc(r.sede)}<br>Miércoles 28 de octubre · <b>${esc(r.hora)} hrs</b>`;
     f.classList.add('hidden'); $('ok').classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'});
   } catch(err) { falta(err.message); }
   finally { $('enviar').disabled = false; $('enviar').textContent = 'Reservar mi hora'; }
