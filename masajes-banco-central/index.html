@@ -109,10 +109,7 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
     <h2><span class="num">2</span>Tus datos</h2>
     <p class="sub">Para confirmar tu hora e identificarte el día del evento.</p>
     <div class="f"><label for="nombre">Nombre completo</label><input type="text" id="nombre" name="nombre" autocomplete="name" required></div>
-    <div class="grid">
-      <div class="f" style="margin-bottom:0"><label for="rut">RUT</label><input type="text" id="rut" name="rut" placeholder="12.345.678-9" required></div>
-      <div class="f" style="margin-bottom:0"><label for="edad">Edad</label><input type="number" id="edad" name="edad" min="16" max="99" inputmode="numeric" required></div>
-    </div>
+    <div class="f" style="margin-bottom:0"><label for="edad">Edad</label><input type="number" id="edad" name="edad" min="16" max="99" inputmode="numeric" required></div>
   </div>
 
   <div class="card">
@@ -224,13 +221,6 @@ $('condiciones').addEventListener('change', e => {
   $('aviso').style.display = conds().some(c => c !== 'Ninguna') ? 'block' : 'none';
 });
 
-function rutValido(r) {
-  r = r.replace(/[^0-9kK]/g,'').toUpperCase(); if (r.length < 8) return false;
-  const cuerpo = r.slice(0,-1), dv = r.slice(-1); let s = 0, m = 2;
-  for (let i = cuerpo.length-1; i >= 0; i--) { s += +cuerpo[i]*m; m = m===7?2:m+1; }
-  const esp = 11 - (s % 11); return dv === (esp===11?'0':esp===10?'K':String(esp));
-}
-
 $('form').addEventListener('submit', async e => {
   e.preventDefault(); $('err').textContent = '';
   const f = e.target, v = id => $(id).value.trim();
@@ -238,13 +228,12 @@ $('form').addEventListener('submit', async e => {
   if (!diaSel()) return falta('Elige un día.');
   if (!hora) return falta('Elige un horario.');
   if (v('nombre').length < 3) return falta('Ingresa tu nombre completo.', $('nombre'));
-  if (!rutValido(v('rut'))) return falta('Revisa tu RUT.', $('rut'));
   if (!/^\d{1,3}$/.test(v('edad')) || +v('edad') < 16 || +v('edad') > 99) return falta('Ingresa tu edad (entre 16 y 99).', $('edad'));
   if (!conds().length) return falta('Marca tus condiciones de salud (o "Ninguna").');
   if (!$('consentimiento').checked) return falta('Debes aceptar el consentimiento.');
 
   const payload = {
-    dia: diaSel(), hora, nombre: v('nombre'), rut: v('rut'), edad: v('edad'),
+    dia: diaSel(), hora, nombre: v('nombre'), edad: v('edad'),
     condiciones: conds(),
     presion: (document.querySelector('input[name=presion]:checked')||{}).value,
     consentimiento: true
@@ -254,7 +243,7 @@ $('form').addEventListener('submit', async e => {
     const r = await rpc('masajes_bcentral_inscribir', {p: payload});
     if (!r.ok) { falta(r.error); if (/horario/.test(r.error)) { hora = null; cargar(); } return; }
     const esc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    $('resumen').innerHTML = (r.ya_inscrito ? '<span class="muted">Este RUT ya tenía una hora reservada:</span><br>' : '') + `<b>${esc(payload.nombre)}</b><br>Banco Central, Morande 153<br>${esc(DIAS[r.dia]||r.dia)} · <b>${esc(r.hora)} hrs</b>`;
+    $('resumen').innerHTML = (r.ya_inscrito ? '<span class="muted">Ya tenías una hora reservada:</span><br>' : '') + `<b>${esc(payload.nombre)}</b><br>Banco Central, Morande 153<br>${esc(DIAS[r.dia]||r.dia)} · <b>${esc(r.hora)} hrs</b>`;
     f.classList.add('hidden'); $('ok').classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'});
   } catch(err) { falta(err.message); }
   finally { $('enviar').disabled = false; $('enviar').textContent = 'Reservar mi hora'; }

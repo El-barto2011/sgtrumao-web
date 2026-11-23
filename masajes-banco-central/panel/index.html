@@ -64,7 +64,7 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
   <div class="stats" id="stats"></div>
   <div class="bar">
     <select id="fSede"><option value="">Ambos días</option><option value="2026-11-25">Miércoles 25</option><option value="2026-11-26">Jueves 26</option></select>
-    <input id="fTxt" placeholder="Buscar nombre o RUT">
+    <input id="fTxt" placeholder="Buscar nombre">
     <label style="display:flex;align-items:center;gap:6px;white-space:nowrap"><input type="checkbox" id="fEval" class="chk" style="width:18px">Solo a evaluar</label>
   </div>
   <div class="tbl"><table>
@@ -82,7 +82,6 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
     </div>
     <div class="campo"><label for="eNombre">Nombre completo</label><input id="eNombre"></div>
     <div class="g2">
-      <div class="campo"><label for="eRut">RUT</label><input id="eRut"></div>
       <div class="campo"><label for="eEdad">Edad</label><input id="eEdad" type="number" min="16" max="99"></div>
     </div>
     <p class="err" id="eErr"></p>
@@ -106,7 +105,6 @@ let clave='', datos=[];
 const DIA={'2026-11-25':'Mié 25','2026-11-26':'Jue 26'};
 const rpc=async(fn,body)=>{const r=await fetch(`${SB_URL}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json();if(!r.ok)throw new Error(j.message||'Error');return j;};
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const fmtRut=r=>r?r.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'-'+r.slice(-1):'';
 
 async function cargar(){
   datos=await rpc('masajes_bcentral_panel',{p_clave:clave});
@@ -123,7 +121,7 @@ try{const k=sessionStorage.getItem('mkbc');if(k){$('clave').value=k;$('entrar').
 
 function pintar(){
   const s=$('fSede').value, t=$('fTxt').value.toLowerCase(), ev=$('fEval').checked;
-  const lista=datos.filter(d=>(!s||d.dia===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)||d.rut.toLowerCase().includes(t.replace(/[^0-9k]/g,''))));
+  const lista=datos.filter(d=>(!s||d.dia===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)));
   const n=f=>datos.filter(f).length;
   $('stats').innerHTML=[
     ['Inscritos',datos.length],['Miércoles 25',n(d=>d.dia==='2026-11-25')],['Jueves 26',n(d=>d.dia==='2026-11-26')],
@@ -132,7 +130,7 @@ function pintar(){
   $('filas').innerHTML=lista.map(d=>`<tr class="${d.requiere_evaluacion?'eval':''}">
     <td><input type="checkbox" class="chk" data-id="${d.id}" ${d.asistio?'checked':''}></td>
     <td><b>${d.hora.slice(0,5)}</b><br><small>${esc(DIA[d.dia]||d.dia)}</small></td>
-    <td><b>${esc(d.nombre)}</b><br><small>${fmtRut(d.rut)} · ${d.edad??''} años</small></td>
+    <td><b>${esc(d.nombre)}</b><br><small>${d.edad??''} años</small></td>
     <td>${d.requiere_evaluacion?'<span class="tag">EVALUAR</span><br>':''}${esc(d.condiciones.join(', '))}</td>
     <td>${esc(d.presion)}</td>
     <td><div class="acc"><button class="sec" data-edit="${d.id}">Editar</button><button class="del" data-del="${d.id}">Eliminar</button></div></td></tr>`).join('')||'<tr><td colspan="6"><small>Sin inscripciones.</small></td></tr>';
@@ -162,7 +160,7 @@ $('filas').addEventListener('click',async e=>{
   const ed=e.target.closest('[data-edit]'), del=e.target.closest('[data-del]');
   if(ed){
     actual=datos.find(d=>d.id===ed.dataset.edit); $('eErr').textContent='';
-    $('eSede').value=actual.dia; $('eNombre').value=actual.nombre; $('eRut').value=fmtRut(actual.rut);
+    $('eSede').value=actual.dia; $('eNombre').value=actual.nombre;
     $('eEdad').value=actual.edad??'';
     $('eHora').innerHTML='<option>Cargando…</option>'; abrir('mEditar');
     try{dispo=await rpc('masajes_bcentral_disponibilidad',{}); llenarHoras();}catch(err){$('eErr').textContent='No se pudieron cargar los horarios.';}
@@ -176,7 +174,7 @@ $('filas').addEventListener('click',async e=>{
 $('eGuardar').onclick=async()=>{
   const b=$('eGuardar'); b.disabled=true; $('eErr').textContent='';
   try{
-    const r=await rpc('masajes_bcentral_editar',{p_clave:clave,p_id:actual.id,p:{dia:$('eSede').value,hora:$('eHora').value,nombre:$('eNombre').value,rut:$('eRut').value,edad:$('eEdad').value}});
+    const r=await rpc('masajes_bcentral_editar',{p_clave:clave,p_id:actual.id,p:{dia:$('eSede').value,hora:$('eHora').value,nombre:$('eNombre').value,edad:$('eEdad').value}});
     if(!r.ok){$('eErr').textContent=r.error;return;}
     cerrar(); await cargar();
   }catch(err){$('eErr').textContent='No se pudo guardar. Revisa tu conexión.';}
@@ -195,7 +193,7 @@ const asegurarLibsPdf=()=>libsPdf||(libsPdf=cargarScript('https://cdnjs.cloudfla
   .catch(e=>{libsPdf=null;throw e;}));
 function filtrados(){
   const s=$('fSede').value, t=$('fTxt').value.toLowerCase(), ev=$('fEval').checked;
-  return datos.filter(d=>(!s||d.dia===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)||d.rut.toLowerCase().includes(t.replace(/[^0-9k]/g,''))))
+  return datos.filter(d=>(!s||d.dia===s)&&(!ev||d.requiere_evaluacion)&&(!t||d.nombre.toLowerCase().includes(t)))
     .sort((x,y)=>x.dia.localeCompare(y.dia)||x.hora.localeCompare(y.hora)||x.nombre.localeCompare(y.nombre));
 }
 $('pdf').onclick=async()=>{
@@ -221,7 +219,7 @@ $('pdf').onclick=async()=>{
     const filas=lista.map(d=>[
       d.asistio?'Sí':'',
       d.hora.slice(0,5)+'\n'+(DIA[d.dia]||d.dia),
-      d.nombre+'\n'+fmtRut(d.rut)+(d.edad!=null?' · '+d.edad+' años':''),
+      d.nombre+(d.edad!=null?'\n'+d.edad+' años':''),
       (d.requiere_evaluacion?'EVALUAR\n':'')+((d.condiciones||[]).join(', ')||'Ninguna'),
       d.presion||''
     ]);
