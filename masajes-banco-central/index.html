@@ -99,8 +99,8 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
     <h2><span class="num">1</span>Día y horario</h2>
     <p class="sub">Elige el día en que vas a asistir y un bloque libre.</p>
     <div class="seg f" id="dias">
-      <label><input type="radio" name="dia" value="2026-11-25" required><span><b>Miércoles 25 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs · colación 13:30 a 14:15</small></span></label>
-      <label><input type="radio" name="dia" value="2026-11-26"><span><b>Jueves 26 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs · colación 13:30 a 14:15</small></span></label>
+      <label><input type="radio" name="dia" value="2026-11-25" required><span><b>Miércoles 25 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs</small></span></label>
+      <label><input type="radio" name="dia" value="2026-11-26"><span><b>Jueves 26 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs</small></span></label>
     </div>
     <div id="slotsBox"><p class="muted">Selecciona un día para ver los horarios disponibles.</p></div>
   </div>
@@ -203,9 +203,9 @@ function pintar() {
     const h = d.hora.slice(0,5), libres = d.cupo - d.ocupados;
     return `<button type="button" class="slot${hora===h?' sel':''}" data-h="${h}" ${libres<=0?'disabled':''}><b>${h}</b><small>${libres<=0?'Lleno':libres+(libres===1?' cupo':' cupos')}</small></button>`;
   }).join('');
-  const am = lista.filter(d => d.hora < '13:30'), pm = lista.filter(d => d.hora >= '14:15');
+  const am = lista.filter(d => d.hora < '14:00'), pm = lista.filter(d => d.hora >= '14:00');
   const grupo = (t, g) => g.length ? `<div class="slot-group">${t}</div><div class="slots">${html(g)}</div>` : '';
-  $('slotsBox').innerHTML = grupo('Mañana · hasta las 13:30', am) + grupo('Tarde · desde las 14:15', pm);
+  $('slotsBox').innerHTML = grupo('Mañana', am) + grupo('Tarde', pm);
 }
 $('dias').addEventListener('change', () => { hora = null; pintar(); });
 $('slotsBox').addEventListener('click', e => {
