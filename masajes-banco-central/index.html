@@ -87,7 +87,7 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
   <div class="wrap">
     <div class="kicker">Feria Vida Central · Banco Central</div>
     <h1>Masaje en silla:<br>reserva tu hora</h1>
-    <p>Una pausa de 15 minutos para descontracturar cuello, hombros y espalda. Completa tu ficha de salud y elige tu horario; el masoterapeuta la revisará antes de atenderte.</p>
+    <p>Una pausa de 15 minutos para descontracturar cuello, hombros y espalda. Elige tu horario y responde unas pocas preguntas de salud; el masoterapeuta las revisará antes de atenderte.</p>
     <div class="chips"><span class="chip">25 y 26 de noviembre</span><span class="chip">09:30 a 15:00 hrs</span><span class="chip">Sesiones de 15 min</span><span class="chip">Morande 153, Santiago</span></div>
   </div>
 </section>
@@ -99,8 +99,8 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
     <h2><span class="num">1</span>Día y horario</h2>
     <p class="sub">Elige el día en que vas a asistir y un bloque libre.</p>
     <div class="seg f" id="dias">
-      <label><input type="radio" name="dia" value="2026-11-25" required><span><b>Miércoles 25 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs</small></span></label>
-      <label><input type="radio" name="dia" value="2026-11-26"><span><b>Jueves 26 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs</small></span></label>
+      <label><input type="radio" name="dia" value="2026-11-25" required><span><b>Miércoles 25 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs · colación 13:30 a 14:15</small></span></label>
+      <label><input type="radio" name="dia" value="2026-11-26"><span><b>Jueves 26 de noviembre</b><small>Banco Central, Morande 153<br>09:30 a 15:00 hrs · colación 13:30 a 14:15</small></span></label>
     </div>
     <div id="slotsBox"><p class="muted">Selecciona un día para ver los horarios disponibles.</p></div>
   </div>
@@ -110,12 +110,9 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
     <p class="sub">Para confirmar tu hora e identificarte el día del evento.</p>
     <div class="f"><label for="nombre">Nombre completo</label><input type="text" id="nombre" name="nombre" autocomplete="name" required></div>
     <div class="grid">
-      <div class="f"><label for="rut">RUT</label><input type="text" id="rut" name="rut" placeholder="12.345.678-9" required></div>
-      <div class="f"><label for="edad">Edad</label><input type="number" id="edad" name="edad" min="16" max="99" inputmode="numeric" required></div>
-      <div class="f"><label for="telefono">Teléfono</label><input type="tel" id="telefono" name="telefono" placeholder="+56 9 ..." autocomplete="tel" required></div>
-      <div class="f"><label for="email">Correo <span class="opt">(opcional)</span></label><input type="email" id="email" name="email" autocomplete="email"></div>
+      <div class="f" style="margin-bottom:0"><label for="rut">RUT</label><input type="text" id="rut" name="rut" placeholder="12.345.678-9" required></div>
+      <div class="f" style="margin-bottom:0"><label for="edad">Edad</label><input type="number" id="edad" name="edad" min="16" max="99" inputmode="numeric" required></div>
     </div>
-    <div class="f" style="margin-bottom:0"><label for="area">Área o cargo <span class="opt">(opcional)</span></label><input type="text" id="area" name="area"></div>
   </div>
 
   <div class="card">
@@ -139,25 +136,7 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
     </div>
     <div class="aviso" id="aviso">Puedes reservar igual. El masoterapeuta revisará tu caso antes de comenzar y adaptará o, si es necesario, suspenderá la sesión por tu seguridad.</div>
 
-    <div class="f" style="margin-top:16px"><label for="medicamentos">Medicamentos que tomas actualmente <span class="opt">(opcional)</span></label><input type="text" id="medicamentos" name="medicamentos"></div>
-
-    <div class="f"><label>¿Dónde sientes molestia o tensión?</label>
-      <div class="checks" id="zonas">
-        <label><input type="checkbox" value="Cuello">Cuello</label>
-        <label><input type="checkbox" value="Hombros">Hombros</label>
-        <label><input type="checkbox" value="Espalda alta">Espalda alta</label>
-        <label><input type="checkbox" value="Espalda baja">Espalda baja</label>
-        <label><input type="checkbox" value="Brazos / muñecas">Brazos o muñecas</label>
-        <label><input type="checkbox" value="Cabeza">Cabeza</label>
-      </div>
-    </div>
-
-    <div class="f"><label for="dolor">Intensidad de la molestia hoy: <span class="dolor-val" id="dolorVal">0</span>/10</label>
-      <input type="range" id="dolor" name="dolor" min="0" max="10" value="0">
-      <div class="range-row"><span>Sin molestia</span><span>Muy intensa</span></div>
-    </div>
-
-    <div class="f"><label>Presión que prefieres</label>
+    <div class="f" style="margin-top:16px;margin-bottom:0"><label>Presión que prefieres</label>
       <div class="seg" style="grid-template-columns:repeat(3,1fr)">
         <label><input type="radio" name="presion" value="Suave">Suave</label>
         <label><input type="radio" name="presion" value="Media" checked>Media</label>
@@ -165,8 +144,7 @@ footer{text-align:center;color:var(--suave);font-size:12px;padding:0 16px 32px}
       </div>
     </div>
 
-    <div class="f" style="margin-bottom:0"><label for="observaciones">Algo más que debamos saber <span class="opt">(opcional)</span></label><textarea id="observaciones" name="observaciones" rows="3" maxlength="1000"></textarea></div>
-  </div>
+      </div>
 
   <div class="card">
     <h2><span class="num">4</span>Consentimiento</h2>
@@ -228,9 +206,9 @@ function pintar() {
     const h = d.hora.slice(0,5), libres = d.cupo - d.ocupados;
     return `<button type="button" class="slot${hora===h?' sel':''}" data-h="${h}" ${libres<=0?'disabled':''}><b>${h}</b><small>${libres<=0?'Lleno':libres+(libres===1?' cupo':' cupos')}</small></button>`;
   }).join('');
-  const am = lista.filter(d => d.hora < '12:00'), pm = lista.filter(d => d.hora >= '12:00');
+  const am = lista.filter(d => d.hora < '13:30'), pm = lista.filter(d => d.hora >= '14:15');
   const grupo = (t, g) => g.length ? `<div class="slot-group">${t}</div><div class="slots">${html(g)}</div>` : '';
-  $('slotsBox').innerHTML = grupo('Mañana', am) + grupo('Tarde', pm);
+  $('slotsBox').innerHTML = grupo('Mañana · hasta las 13:30', am) + grupo('Tarde · desde las 14:15', pm);
 }
 $('dias').addEventListener('change', () => { hora = null; pintar(); });
 $('slotsBox').addEventListener('click', e => {
@@ -245,7 +223,6 @@ $('condiciones').addEventListener('change', e => {
   else if (e.target.checked) $('ninguna').checked = false;
   $('aviso').style.display = conds().some(c => c !== 'Ninguna') ? 'block' : 'none';
 });
-$('dolor').addEventListener('input', e => $('dolorVal').textContent = e.target.value);
 
 function rutValido(r) {
   r = r.replace(/[^0-9kK]/g,'').toUpperCase(); if (r.length < 8) return false;
@@ -263,16 +240,14 @@ $('form').addEventListener('submit', async e => {
   if (v('nombre').length < 3) return falta('Ingresa tu nombre completo.', $('nombre'));
   if (!rutValido(v('rut'))) return falta('Revisa tu RUT.', $('rut'));
   if (!/^\d{1,3}$/.test(v('edad')) || +v('edad') < 16 || +v('edad') > 99) return falta('Ingresa tu edad (entre 16 y 99).', $('edad'));
-  if (v('telefono').replace(/\D/g,'').length < 8) return falta('Ingresa un teléfono válido.', $('telefono'));
   if (!conds().length) return falta('Marca tus condiciones de salud (o "Ninguna").');
   if (!$('consentimiento').checked) return falta('Debes aceptar el consentimiento.');
 
   const payload = {
-    dia: diaSel(), hora, nombre: v('nombre'), rut: v('rut'), edad: v('edad'), telefono: v('telefono'),
-    email: v('email'), area: v('area'), condiciones: conds(), medicamentos: v('medicamentos'),
-    zonas: [...document.querySelectorAll('#zonas input:checked')].map(i => i.value),
-    dolor: $('dolor').value, presion: (document.querySelector('input[name=presion]:checked')||{}).value,
-    observaciones: v('observaciones'), consentimiento: true
+    dia: diaSel(), hora, nombre: v('nombre'), rut: v('rut'), edad: v('edad'),
+    condiciones: conds(),
+    presion: (document.querySelector('input[name=presion]:checked')||{}).value,
+    consentimiento: true
   };
   $('enviar').disabled = true; $('enviar').textContent = 'Reservando…';
   try {

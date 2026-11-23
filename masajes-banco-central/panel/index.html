@@ -26,7 +26,7 @@ button.sec{background:#fff;color:var(--marino);border:1px solid var(--borde)}
 .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .bar select,.bar input{width:auto;flex:1;min-width:160px}
 .tbl{overflow-x:auto;background:#fff;border:1px solid var(--borde);border-radius:10px}
-table{width:100%;border-collapse:collapse;min-width:900px}
+table{width:100%;border-collapse:collapse;min-width:640px}
 th,td{padding:9px 10px;border-bottom:1px solid var(--borde);text-align:left;vertical-align:top}
 th{background:#EDF2FA;font-size:12px;color:var(--suave);text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0}
 tr.eval td{background:var(--ambar)}
@@ -68,7 +68,7 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
     <label style="display:flex;align-items:center;gap:6px;white-space:nowrap"><input type="checkbox" id="fEval" class="chk" style="width:18px">Solo a evaluar</label>
   </div>
   <div class="tbl"><table>
-    <thead><tr><th>Asistió</th><th>Día · Hora</th><th>Persona</th><th>Anamnesis</th><th>Molestia</th><th>Presión</th><th>Obs.</th><th></th></tr></thead>
+    <thead><tr><th>Asistió</th><th>Día · Hora</th><th>Persona</th><th>Anamnesis</th><th>Presión</th><th></th></tr></thead>
     <tbody id="filas"></tbody>
   </table></div>
 </div>
@@ -84,12 +84,7 @@ button.del{background:#fff;color:#B3261E;border:1px solid #E7B9B5}
     <div class="g2">
       <div class="campo"><label for="eRut">RUT</label><input id="eRut"></div>
       <div class="campo"><label for="eEdad">Edad</label><input id="eEdad" type="number" min="16" max="99"></div>
-      <div class="campo"><label for="eTel">Teléfono</label><input id="eTel" type="tel"></div>
-      <div class="campo"><label for="eEmail">Correo</label><input id="eEmail" type="email"></div>
     </div>
-    <div class="campo"><label for="eArea">Área o cargo</label><input id="eArea"></div>
-    <div class="campo"><label for="eMed">Medicamentos</label><input id="eMed"></div>
-    <div class="campo"><label for="eObs">Observaciones</label><input id="eObs"></div>
     <p class="err" id="eErr"></p>
     <div class="botones"><button class="sec" data-cerrar>Cancelar</button><button id="eGuardar">Guardar cambios</button></div>
   </div>
@@ -137,11 +132,10 @@ function pintar(){
   $('filas').innerHTML=lista.map(d=>`<tr class="${d.requiere_evaluacion?'eval':''}">
     <td><input type="checkbox" class="chk" data-id="${d.id}" ${d.asistio?'checked':''}></td>
     <td><b>${d.hora.slice(0,5)}</b><br><small>${esc(DIA[d.dia]||d.dia)}</small></td>
-    <td><b>${esc(d.nombre)}</b><br><small>${fmtRut(d.rut)} · ${d.edad??''} años<br>${esc(d.telefono)}${d.area?'<br>'+esc(d.area):''}</small></td>
-    <td>${d.requiere_evaluacion?'<span class="tag">EVALUAR</span><br>':''}${esc(d.condiciones.join(', '))}${d.medicamentos?'<br><small>Med: '+esc(d.medicamentos)+'</small>':''}</td>
-    <td>${esc(d.zonas_molestia.join(', '))}<br><small>Dolor ${d.dolor??0}/10</small></td>
-    <td>${esc(d.presion)}</td><td>${esc(d.observaciones)}</td>
-    <td><div class="acc"><button class="sec" data-edit="${d.id}">Editar</button><button class="del" data-del="${d.id}">Eliminar</button></div></td></tr>`).join('')||'<tr><td colspan="8"><small>Sin inscripciones.</small></td></tr>';
+    <td><b>${esc(d.nombre)}</b><br><small>${fmtRut(d.rut)} · ${d.edad??''} años</small></td>
+    <td>${d.requiere_evaluacion?'<span class="tag">EVALUAR</span><br>':''}${esc(d.condiciones.join(', '))}</td>
+    <td>${esc(d.presion)}</td>
+    <td><div class="acc"><button class="sec" data-edit="${d.id}">Editar</button><button class="del" data-del="${d.id}">Eliminar</button></div></td></tr>`).join('')||'<tr><td colspan="6"><small>Sin inscripciones.</small></td></tr>';
 }
 ['fSede','fTxt','fEval'].forEach(id=>$(id).addEventListener('input',pintar));
 $('recargar').onclick=()=>cargar();
@@ -169,8 +163,7 @@ $('filas').addEventListener('click',async e=>{
   if(ed){
     actual=datos.find(d=>d.id===ed.dataset.edit); $('eErr').textContent='';
     $('eSede').value=actual.dia; $('eNombre').value=actual.nombre; $('eRut').value=fmtRut(actual.rut);
-    $('eEdad').value=actual.edad??''; $('eTel').value=actual.telefono??''; $('eEmail').value=actual.email??'';
-    $('eArea').value=actual.area??''; $('eMed').value=actual.medicamentos??''; $('eObs').value=actual.observaciones??'';
+    $('eEdad').value=actual.edad??'';
     $('eHora').innerHTML='<option>Cargando…</option>'; abrir('mEditar');
     try{dispo=await rpc('masajes_bcentral_disponibilidad',{}); llenarHoras();}catch(err){$('eErr').textContent='No se pudieron cargar los horarios.';}
   }
@@ -183,7 +176,7 @@ $('filas').addEventListener('click',async e=>{
 $('eGuardar').onclick=async()=>{
   const b=$('eGuardar'); b.disabled=true; $('eErr').textContent='';
   try{
-    const r=await rpc('masajes_bcentral_editar',{p_clave:clave,p_id:actual.id,p:{dia:$('eSede').value,hora:$('eHora').value,nombre:$('eNombre').value,rut:$('eRut').value,edad:$('eEdad').value,telefono:$('eTel').value,email:$('eEmail').value,area:$('eArea').value,medicamentos:$('eMed').value,observaciones:$('eObs').value}});
+    const r=await rpc('masajes_bcentral_editar',{p_clave:clave,p_id:actual.id,p:{dia:$('eSede').value,hora:$('eHora').value,nombre:$('eNombre').value,rut:$('eRut').value,edad:$('eEdad').value}});
     if(!r.ok){$('eErr').textContent=r.error;return;}
     cerrar(); await cargar();
   }catch(err){$('eErr').textContent='No se pudo guardar. Revisa tu conexión.';}
@@ -229,18 +222,15 @@ $('pdf').onclick=async()=>{
       d.asistio?'Sí':'',
       d.hora.slice(0,5)+'\n'+(DIA[d.dia]||d.dia),
       d.nombre+'\n'+fmtRut(d.rut)+(d.edad!=null?' · '+d.edad+' años':''),
-      [d.telefono,d.area].filter(Boolean).join('\n'),
-      (d.requiere_evaluacion?'EVALUAR\n':'')+((d.condiciones||[]).join(', ')||'Ninguna')+(d.medicamentos?'\nMed: '+d.medicamentos:''),
-      ((d.zonas_molestia||[]).join(', ')||'-')+'\nDolor '+(d.dolor??0)+'/10',
-      d.presion||'',
-      d.observaciones||''
+      (d.requiere_evaluacion?'EVALUAR\n':'')+((d.condiciones||[]).join(', ')||'Ninguna'),
+      d.presion||''
     ]);
     doc.autoTable({
-      startY:43, head:[['Asistió','Hora · Día','Persona','Contacto · Área','Anamnesis','Molestia','Presión','Obs.']], body:filas,
+      startY:43, head:[['Asistió','Hora · Día','Persona','Anamnesis','Presión']], body:filas,
       theme:'grid', margin:{left:12,right:12,bottom:14},
       styles:{font:'helvetica',fontSize:8.5,cellPadding:2,valign:'top',lineColor:[220,227,239],lineWidth:0.2,textColor:[30,45,58],overflow:'linebreak'},
       headStyles:{fillColor:[237,242,250],textColor:[94,102,117],fontStyle:'bold',fontSize:8},
-      columnStyles:{0:{cellWidth:15,halign:'center'},1:{cellWidth:22},2:{cellWidth:50},3:{cellWidth:36},4:{cellWidth:58},5:{cellWidth:44},6:{cellWidth:18},7:{cellWidth:'auto'}},
+      columnStyles:{0:{cellWidth:15,halign:'center'},1:{cellWidth:24},2:{cellWidth:70},3:{cellWidth:'auto'},4:{cellWidth:24}},
       didParseCell:h=>{ if(h.section!=='body')return; const d=lista[h.row.index];
         if(d&&d.requiere_evaluacion) h.cell.styles.fillColor=[255,243,214];
         if(h.column.index===2) h.cell.styles.fontStyle='normal';
